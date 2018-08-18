@@ -6,7 +6,7 @@
         <!-- mini logo for sidebar mini 50x50 pixels -->
         <span class="logo-mini"><img src="{{ asset('img/logo.png') }}" height="24px" width="auto"></span>
         <!-- logo for regular state and mobile devices -->
-        <span class="logo-lg"><img src="{{ asset('img/logo.png') }}" height="42px" width="auto"></span>
+        <span class="logo-lg"><img src="{{ asset('img/logo.png') }}" height="42px" width="auto"> Admin Page</span>
     </a>
 
     <!-- Header Navbar -->
