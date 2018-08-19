@@ -74,42 +74,52 @@
     </div>
 
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-aqua"><i class="fa fa-link"></i></span>
 
-            <div class="box">
-                <!-- /.box-header -->
-                <div class="box-header">
-                    <i class="fa fa-bookmark"></i>
-                    Admin List
+                <div class="info-box-content">
+                    <span class="info-box-text">Tautan Pendek Dibuat</span>
+                    <span class="info-box-number">{{ \App\DataStatistik::where('nama', 'shortlinkgenerate')->first()->nilai }}</span>
+                    <span class="info-box-more">Updated at {{ date_format(\App\DataStatistik::where('nama', 'shortlinkgenerate')->first()->updated_at, "d F Y H:i:s") }}</span>
                 </div>
-                <div class="box-body table-responsive">
-                    <table id="table-ruang" class="table table-bordered">
-                        <thead id="tableHeader">
-                        <tr>
-                            <th style="width: 5%;">No.</th>
-                            <th>Nama</th>
-                            <th>Email</th>
-                            <th>Created at</th>
-                            <th>Updated at</th>
-                        </tr>
-                        </thead>
-                        <p hidden>{{ $i = 0 }}</p>
-                        <tbody>
-                        @foreach(DB::select('select * from users') as $user)
-                            <tr>
-                                <td>{{ ++$i }}</td>
-                                <td>{{ $user->name }}</td>
-                                <td>{{ $user->email }}</td>
-                                <td>{{ $user->created_at }}</td>
-                                <td>{{ $user->updated_at }}</td>
-                            </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
-                </div>
+                <!-- /.info-box-content -->
             </div>
-            <!-- /.box -->
-            <!-- /.col -->
+            <!-- /.info-box -->
         </div>
+        <!-- /.col -->
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-red"><i class="fa fa-link"></i></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text">Tautan Pendek Custom Dibuat</span>
+                    <span class="info-box-number">{{ \App\DataStatistik::where('nama', 'shortlinkcustom')->first()->nilai }}</span>
+                    <span class="info-box-more">Updated at {{ date_format(\App\DataStatistik::where('nama', 'shortlinkcustom')->first()->updated_at, "d F Y H:i:s") }}</span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+
+        <!-- fix for small devices only -->
+        <div class="clearfix visible-sm-block"></div>
+
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-green"><i class="fa fa-link"></i></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text">Tautan Pendek Akses</span>
+                    <span class="info-box-number">{{ \App\DataStatistik::where('nama', 'shortlinkakses')->first()->nilai }}</span>
+                    <span class="info-box-more">Updated at {{ date_format(\App\DataStatistik::where('nama', 'shortlinkakses')->first()->updated_at, "d F Y H:i:s") }}</span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
     </div>
+    <!-- /.row -->
 @endsection

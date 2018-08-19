@@ -26,3 +26,7 @@ Route::resource('/home/shorturl', 'ShortUrlController');
 Route::resource('/home/customurl', 'CustomUrlController');
 
 Route::resource('/home/akses', 'AksesController');
+
+Route::post('/', 'URLShortenerController@doShort');
+
+Route::get('/{shorturl}', 'URLShortenerController@go');
