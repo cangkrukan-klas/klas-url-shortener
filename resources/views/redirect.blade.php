@@ -131,17 +131,10 @@ $_POST = array();
                                 </div>
                                 <div class="row justify-content-center">
                                     <div class="card" style="width: 100%;">
-                                        <div class="card-header">Mengarahkan</div>
-
-                                        <div class="card-body">
-                                            <div class="row justify-content-center" id="timer">
-                                                <div class="col-md-4 offset-4">
-                                                    <h4>5</h4>
-                                                </div>
-                                            </div>
-                                            <div class="row">
+                                        <div class="card-header" id="timer">Mengarahkan</div>
+                                            <div class="row" style="padding-top: 20px;">
                                                 <label for="tujuan" class="col-sm-2 col-form-label text-md-right">Tujuan</label>
-                                                <div class="col-md-10">
+                                                <div class="col-md-9">
                                                     <textarea id="tujuan" type="text" class="form-control" readonly>{{ $url }}</textarea>
                                                 </div>
                                             </div>
@@ -171,12 +164,12 @@ $_POST = array();
         countDown--;
 
         // Output the result in an element with id="demo"
-        document.getElementById("timer").innerHTML = "<div class='col-md-4 offset-4'><h4>" + countDown +"</h4></div>";
+        document.getElementById("timer").innerHTML = "Mengarahkan ... (" + countDown + "d)";
 
         // If the count down is over, write some text
         if (countDown <= 0) {
             clearInterval(x);
-            document.getElementById("timer").innerHTML = "<div class='col-md-4 offset-2'><h4>Membuka . . .</h4></div>";
+            document.getElementById("timer").innerHTML = "Membuka ..";
             window.location = "{{ $url }}";
         }
     }, 1000);
