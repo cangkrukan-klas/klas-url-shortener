@@ -37,6 +37,9 @@ class URLShortenerController extends Controller
         $result_2 = "";
         $url = $request->get('url');
         $customurl = $request->get('customurl');
+        if ($customurl == "home" || $customurl == "login" || $customurl == "register") {
+            return view('telah-digunakan');
+        }
 
         // Check the url in database
         try {
@@ -85,7 +88,7 @@ class URLShortenerController extends Controller
             }
 
             if ($isNewCusUrl == 0) {
-                $result_2 = $cu_q->customurl;
+                return view('telah-digunakan');
             } else {
                 $newCusUrl = new CustomUrl;
                 $newCusUrl->url_id = $su_q->id;
