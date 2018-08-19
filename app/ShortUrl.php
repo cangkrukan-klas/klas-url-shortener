@@ -6,5 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class ShortUrl extends Model
 {
-    //
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'url', 'shorturl'
+    ];
 }
