@@ -15,6 +15,8 @@ class CreateCustomUrlsTable extends Migration
     {
         Schema::create('custom_urls', function (Blueprint $table) {
             $table->increments('id');
+            $table->unsignedInteger('url_id');
+            $table->string('customurl');
             $table->timestamps();
         });
     }
