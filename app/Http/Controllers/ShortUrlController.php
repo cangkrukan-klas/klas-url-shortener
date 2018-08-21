@@ -8,13 +8,22 @@ use Illuminate\Http\Request;
 class ShortUrlController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        //
+        return view('data-shorturl', ['page_title' => 'Data Short URL']);
     }
 
     /**

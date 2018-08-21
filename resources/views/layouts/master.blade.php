@@ -10,6 +10,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <title>{{ $page_title or "KLAS Admin Page" }}</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="icon" href="https://i0.wp.com/klas.or.id/wp-content/uploads/2015/10/cropped-g4067.png?fit=32%2C32&amp;ssl=1" sizes="32x32">
+    <link rel="icon" href="https://i1.wp.com/klas.or.id/wp-content/uploads/2015/10/cropped-g4067.png?fit=192%2C192&amp;ssl=1" sizes="192x192">
 
     <link rel="stylesheet" href="{{ asset('css/admin-lte.css')}}">
 

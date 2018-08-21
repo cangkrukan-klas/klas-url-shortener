@@ -45,12 +45,6 @@
                     <span>Data URL Custom</span>
                 </a>
             </li>
-            <li {{{ (Request::is('home/akses') ? 'class=active' : '') }}}>
-                <a href="{{ url("home/akses") }}">
-                    <i class="fa fa-address-book"></i>
-                    <span>Data Akses</span>
-                </a>
-            </li>
             <li>
                 <a href="{{ url("home/about") }}">
                     <i class="fa fa-info"></i>

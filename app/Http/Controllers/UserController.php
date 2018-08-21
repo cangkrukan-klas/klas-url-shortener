@@ -23,7 +23,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('data-admin');
+        return view('data-admin', ['page_title' => 'Data Admin']);
     }
 
     /**

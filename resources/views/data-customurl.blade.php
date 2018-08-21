@@ -17,11 +17,11 @@
                     </thead>
                     <p hidden>{{ $i = 0 }}</p>
                     <tbody>
-                    @foreach(DB::select('select * from short_urls') as $data)
+                    @foreach(DB::select('select * from custom_urls') as $data)
                         <tr>
                             <td>{{ ++$i }}</td>
-                            <td>{{ $data->url }}</td>
-                            <td>https://s.klas.or.id/{{ $data->shorturl }}</td>
+                            <td>{{ (\App\ShortUrl::find($data->url_id)->url) }}</td>
+                            <td>https://s.klas.or.id/{{ $data->customurl }}</td>
                             <td>{{ date_format(date_create($data->created_at), "d F Y") }}</td>
                         </tr>
                     @endforeach

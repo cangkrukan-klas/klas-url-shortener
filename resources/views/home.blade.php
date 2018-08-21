@@ -111,7 +111,7 @@
                 <span class="info-box-icon bg-green"><i class="fa fa-link"></i></span>
 
                 <div class="info-box-content">
-                    <span class="info-box-text">Tautan Pendek Akses</span>
+                    <span class="info-box-text">Tautan Pendek Diakses</span>
                     <span class="info-box-number">{{ \App\DataStatistik::where('nama', 'shortlinkakses')->first()->nilai }}</span>
                     <span class="info-box-more">Updated at {{ date_format(\App\DataStatistik::where('nama', 'shortlinkakses')->first()->updated_at, "d F Y H:i:s") }}</span>
                 </div>
