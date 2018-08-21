@@ -41,8 +41,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <small>{{ $page_description or null }}</small>
             </h1>
             <ol class="breadcrumb">
-                <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
-                <li class="active">Here</li>
+                <li><a href="{{ url('/home') }}">Home</a></li>
+                <li class="active">{{ isset($page_title) ? $page_title : "Page Title" }}</li>
             </ol>
         </section>
 

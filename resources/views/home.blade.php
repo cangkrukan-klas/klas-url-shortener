@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="row">
-        <div class="col-lg-3 col-xs-6">
+        <div class="col-lg-4 col-xs-6">
             <!-- small box -->
             <div class="small-box bg-aqua">
                 <div class="inner">
@@ -21,7 +21,7 @@
             </div>
         </div>
         <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
+        <div class="col-lg-4 col-xs-6">
             <!-- small box -->
             <div class="small-box bg-green">
                 <div class="inner">
@@ -39,7 +39,7 @@
             </div>
         </div>
         <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
+        <div class="col-lg-4 col-xs-6">
             <!-- small box -->
             <div class="small-box bg-yellow">
                 <div class="inner">
@@ -51,22 +51,6 @@
                     <i class="fa fa-table"></i>
                 </div>
                 <a href="{{ url("home/customurl") }}" class="small-box-footer">Go to
-                    <i class="fa fa-arrow-circle-right"></i>
-                </a>
-            </div>
-        </div>
-        <div class="col-lg-3 col-xs-6">
-            <!-- small box -->
-            <div class="small-box bg-red">
-                <div class="inner">
-                    <h3>Data</h3>
-
-                    <p>Akses</p>
-                </div>
-                <div class="icon">
-                    <i class="fa fa-address-book"></i>
-                </div>
-                <a href="{{ url("home/akses") }}" class="small-box-footer">Go to
                     <i class="fa fa-arrow-circle-right"></i>
                 </a>
             </div>

@@ -19,13 +19,13 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::resource('/home/admin', 'UserController');
+Route::get('/home/admin', 'UserController@index');
 
-Route::resource('/home/shorturl', 'ShortUrlController');
+Route::get('/home/shorturl', 'ShortUrlController@index');
 
-Route::resource('/home/customurl', 'CustomUrlController');
+Route::get('/home/customurl', 'CustomUrlController@index');
 
-Route::resource('/home/akses', 'AksesController');
+Route::get('/home/about', 'AboutController@index');
 
 Route::post('/', 'URLShortenerController@doShort');
 
