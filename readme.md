@@ -8,17 +8,15 @@
 <a href="https://klas.or.id/index.php/topik/tutorial/">Tutorial</a>
 </p>
 
-----------------------------------
 
 ## Tentang KLAS
 
 Kelompok Linux Arek Suroboyo adalah tempat berkumpul, berbagi informasi, dan belajar bagi para pengguna Linux dan dan penggiat open source di Surabaya.
 
-----------------------------------
 
-<h1 align="center">Kunjungi Kami</h1>
+## Kunjungi Kami
 
-<p align="center">
-<a href="https://klas.or.id">Website |</a>
-<a href="https://www.facebook.com/kelompoklinuxareksuroboyo/">Facebook</a>
-</p>
+<ul style="list-style-type: none; display: inline;">
+<li><a href="https://klas.or.id">Website</a></li>
+<li><a href="https://www.facebook.com/kelompoklinuxareksuroboyo/">Facebook</a></li>
+</ul>
