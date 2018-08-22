@@ -2,6 +2,8 @@
 // Fonts
 @import url('https://fonts.googleapis.com/css?family=Nunito');
 @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic');
+@import "~font-awesome/scss/font-awesome";
+@import "~ionicons/dist/scss/ionicons";
 
 // Variables
 @import 'variables';
@@ -15,6 +17,3 @@
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 }
-
-@import "~font-awesome/scss/font-awesome";
-@import "~ionicons/dist/scss/ionicons";
