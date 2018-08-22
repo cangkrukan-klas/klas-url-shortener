@@ -20,7 +20,6 @@
         "vue": "^2.5.7"
     },
     "dependencies": {
-        "admin-lte": "^2.4.8",
         "ajv": "^6.5.3"
     }
 }
