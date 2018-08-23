@@ -67,7 +67,14 @@
             <div class="float-right">
                 2018
             </div>
-            <span class="text-muted">by <a href="https://github.com/fadhilyori">Fadhil Yori Hibatullah</a></span>
+            <div class="row justify-content-md-center" style="margin-bottom: 0;">
+                <div class="col-md-5">
+                    <span class="text-muted">by <a href="https://github.com/fadhilyori">Fadhil Yori Hibatullah</a></span>
+                </div>
+                <div class="col-md-7">
+                    Tautan pendek dibuat : {{ (\App\DataStatistik::where('nama', 'shortlinkgenerate')->first()->nilai) + (\App\DataStatistik::where('nama', 'shortlinkcustom')->first()->nilai) }}
+                </div>
+            </div>
         </div>
     </footer>
 </div>
