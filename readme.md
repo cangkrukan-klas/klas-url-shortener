@@ -20,3 +20,6 @@ Kelompok Linux Arek Suroboyo adalah tempat berkumpul, berbagi informasi, dan bel
 <li><a href="https://klas.or.id">Website</a></li>
 <li><a href="https://www.facebook.com/kelompoklinuxareksuroboyo/">Facebook</a></li>
 </ul>
+
+## Lisensi
+Lisensi dari project KLAS URL Shortener adalah `MIT`
