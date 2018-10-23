@@ -2,10 +2,19 @@
 
 namespace Tests\Feature;
 
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
 
 class HomePageTest extends TestCase
 {
+    use DatabaseMigrations;
+
+    protected function setUp()
+    {
+        parent::setUp();
+        $this->seed(\DatabaseSeeder::class);
+    }
+
     /** @test */
     public function access_home_page()
     {
