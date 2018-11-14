@@ -13,6 +13,30 @@
 
 Kelompok Linux Arek Suroboyo adalah tempat berkumpul, berbagi informasi, dan belajar bagi para pengguna Linux dan dan penggiat open source di Surabaya.
 
+## Tentang klas-url-shortener
+
+klas-url-shortener adalah Pemendek Tautan Sederhana dan Cepat dibuat oleh Kelompok Linux Arek Suroboyo.
+
+## Requirment Install klas-url-shortener
+
+<ul>
+<li>Server harus terinstall Apache server, PHP</li>
+</ul>
+
+## Cara Clone klas-url-shortener
+
+<ul>
+<li>Klik button clone /download</li>
+<li>copy url</li>
+<li>buka terminal, tulis perintah git clone (url yang sudah di copy) </li>
+</ul>
+
+## Cara Clone klas-url-shortener
+
+<ul style="list-style-type: none; display: inline;">
+<li>Website</li>
+<li>Facebook</li>
+</ul>
 
 ## Kunjungi Kami
 
