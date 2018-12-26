@@ -46,6 +46,10 @@
             font-weight: bolder;
             color: inherit;
         }
+
+        .py-4 {
+            padding-bottom: 0!important;
+        }
     </style>
 </head>
 <body>
@@ -53,7 +57,7 @@
     <main class="py-4">
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-8 offset-1">
+            <div class="col-md-8">
                 <main class="py-4" style="margin-top: 4%;">
                     @yield('content')
                 </main>
@@ -69,10 +73,10 @@
             </div>
             <div class="row justify-content-md-center" style="margin-bottom: 0;">
                 <div class="col-md-5">
-                    <span class="text-muted"><a href="https://github.com/fadhilyori/klas-url-shortener"><img width="24px" height="24px" src="{{ asset('img/github/GitHub-Mark-32px.png') }}" > <img height="24px" width="auto" src="{{ asset('img/github/GitHub_Logo.png') }}"></a></span>
+                    <span class="text-muted"><a href="https://github.com/fadhilyori/klas-url-shortener"><img alt="GitHub Mark" width="24px" height="24px" src="{{ asset('img/github/GitHub-Mark-32px.png') }}" > <img alt="GitHub Logo" height="24px" width="auto" src="{{ asset('img/github/GitHub_Logo.png') }}"></a></span>
                 </div>
                 <div class="col-md-7">
-                    Tautan pendek dibuat : {{ (\App\DataStatistik::where('nama', 'shortlinkgenerate')->first()->nilai) + (\App\DataStatistik::where('nama', 'shortlinkcustom')->first()->nilai) }}
+                    Tautan pendek dibuat : {{ (\App\DataStatistik::query()->where('nama', 'shortlinkgenerate')->first()->nilai) + (\App\DataStatistik::query()->where('nama', 'shortlinkcustom')->first()->nilai) }}
                 </div>
             </div>
         </div>

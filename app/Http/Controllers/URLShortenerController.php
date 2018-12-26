@@ -8,16 +8,9 @@ use App\ShortUrl;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 
 class URLShortenerController extends Controller
 {
-//url = url.replace("http", "")
-//url = url.replace("s://", "")
-//url = url.replace("://", "")
-//url = url.replace("www.", "")
-//if url.endswith('/'):
-//url = url[:-1]
 
     function randomString($length = 3) {
         $str = "";
@@ -33,7 +26,6 @@ class URLShortenerController extends Controller
     public function doShort(Request $request) {
         // Melakukan pemendekan link
         $doGenerate = 0;
-        $result = "";
         $result_2 = "";
         $url = $request->get('url');
         $customurl = $request->get('customurl');
@@ -43,7 +35,7 @@ class URLShortenerController extends Controller
 
         // Check the url in database
         try {
-            $su_q = ShortUrl::where('url', $url)->firstOrFail();
+            $su_q = ShortUrl::query()->where('url', $url)->firstOrFail();
         } catch (QueryException $e) {
             $doGenerate = 1;
         } catch (ModelNotFoundException $e) {
@@ -61,7 +53,7 @@ class URLShortenerController extends Controller
                 $su_q->save();
                 $result = $urlRand;
                 try {
-                    $stat = DataStatistik::where('nama', 'shortlinkgenerate')->firstOrFail();
+                    $stat = DataStatistik::query()->where('nama', 'shortlinkgenerate')->firstOrFail();
                     $stat->update([
                         'nama' => $stat->nama,
                         'nilai' => $stat->nilai + 1
@@ -80,7 +72,7 @@ class URLShortenerController extends Controller
         if ($customurl != "" || $customurl != null) {
             $isNewCusUrl = 0;
             try {
-                $cu_q = CustomUrl::where('customurl', $customurl)->firstOrFail();
+                CustomUrl::query()->where('customurl', $customurl)->firstOrFail();
             } catch (QueryException $e) {
                 $isNewCusUrl = 1;
             } catch (ModelNotFoundException $e) {
@@ -97,7 +89,7 @@ class URLShortenerController extends Controller
                     $newCusUrl->save();
                     $result_2 = $customurl;
                     try {
-                        $stat = DataStatistik::where('nama', 'shortlinkcustom')->firstOrFail();
+                        $stat = DataStatistik::query()->where('nama', 'shortlinkcustom')->firstOrFail();
                         $stat->update([
                             'nama' => $stat->nama,
                             'nilai' => $stat->nilai + 1
@@ -126,12 +118,12 @@ class URLShortenerController extends Controller
         $url = "";
         $page = "redirect";
         try {
-            $su_q = ShortUrl::where('shorturl', $shorturl)->firstOrFail();
+            $su_q = ShortUrl::query()->where('shorturl', $shorturl)->firstOrFail();
             $url = $su_q->url;
         } catch (\Exception $e) {
             try {
-                $su_q = CustomUrl::where('customurl', $shorturl)->firstOrFail();
-                $su_q = ShortUrl::findOrFail($su_q->url_id);
+                $su_q = CustomUrl::query()->where('customurl', $shorturl)->firstOrFail();
+                $su_q = ShortUrl::query()->findOrFail($su_q->url_id);
                 $url = $su_q->url;
             } catch (\Exception $e) {
                 $page = "404";
@@ -140,7 +132,7 @@ class URLShortenerController extends Controller
 //        return Response(['url' => $url, 'page' => $page]); // for debugging only
         if ($url != "") {
             try {
-                $stat = DataStatistik::where('nama', 'shortlinkakses')->firstOrFail();
+                $stat = DataStatistik::query()->where('nama', 'shortlinkakses')->firstOrFail();
                 $stat->update([
                     'nama' => $stat->nama,
                     'nilai' => $stat->nilai + 1
