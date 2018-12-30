@@ -29,6 +29,13 @@ class URLShortenerController extends Controller
         $result_2 = "";
         $url = $request->get('url');
         $customurl = $request->get('customurl');
+        $parse = parse_url($customurl);
+        if (isset($parse['scheme'])) {
+            $theList = array($parse['scheme'], "://", $parse['host']);
+            $customurl = str_replace($theList, "", $customurl);
+        }
+        $pattern = "/[^a-zA-Z0-9 \. \-]/";
+        $customurl = preg_replace($pattern, "", $customurl);
         if ($customurl == "home" || $customurl == "login" || $customurl == "register") {
             return view('telah-digunakan');
         }
@@ -124,7 +131,9 @@ class URLShortenerController extends Controller
             try {
                 $su_q = CustomUrl::query()->where('customurl', $shorturl)->firstOrFail();
                 $su_q = ShortUrl::query()->findOrFail($su_q->url_id);
+//                $su_q = CustomUrl::query()->where('customurl', $shorturl)->with('user_id')->firstOrFail();
                 $url = $su_q->url;
+                dd($url);
             } catch (\Exception $e) {
                 $page = "404";
             }

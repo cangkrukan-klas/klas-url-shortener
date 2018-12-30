@@ -14,4 +14,8 @@ class CustomUrl extends Model
     protected $fillable = [
         'url_id', 'customurl'
     ];
+
+    public function url_id() {
+        return $this->belongsTo(ShortUrl::class);
+    }
 }
