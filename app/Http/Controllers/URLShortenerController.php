@@ -133,7 +133,6 @@ class URLShortenerController extends Controller
                 $su_q = ShortUrl::query()->findOrFail($su_q->url_id);
 //                $su_q = CustomUrl::query()->where('customurl', $shorturl)->with('user_id')->firstOrFail();
                 $url = $su_q->url;
-                dd($url);
             } catch (\Exception $e) {
                 $page = "404";
             }
