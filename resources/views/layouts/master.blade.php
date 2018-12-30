@@ -8,6 +8,9 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
+    <!-- Scripts -->
+    <script src="{{ asset('js/app.js') }}" defer></script>
+
     <!-- Icons -->
     <link rel="icon"
           href="https://i0.wp.com/klas.or.id/wp-content/uploads/2015/10/cropped-g4067.png?fit=32%2C32&amp;ssl=1"
@@ -106,8 +109,6 @@
         </div>
     </footer>
 </div>
-<!-- Scripts -->
-<script src="{{ asset('js/app.js') }}"></script>
 @yield('jsscript')
 </body>
 </html>
