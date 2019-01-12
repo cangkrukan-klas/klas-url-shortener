@@ -1,5 +1,5 @@
 // Fonts
-@import url('https://fonts.googleapis.com/css?family=Roboto');
+@import url('https://fonts.googleapis.com/css?family=Nunito');
 @import "~@fortawesome/fontawesome-free/scss/fontawesome";
 @import "~@fortawesome/fontawesome-free/scss/solid";
 @import "~@fortawesome/fontawesome-free/scss/icons";
@@ -9,6 +9,7 @@
 
 // Bootstrap
 @import "~bootstrap/scss/bootstrap";
+@import "~normalize.css/normalize.css";
 
 
 .navbar-laravel {
@@ -28,7 +29,7 @@ html {
 body {
   margin-bottom: 60px; /* Margin bottom by footer height */
   background-color: white;
-  font-family: 'Roboto', sans-serif;
+  font-family: Nunito, Arial, sans-serif;
 }
 
 .footer {
@@ -41,7 +42,7 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Roboto', sans-serif;
+  font-family: Nunito, Arial, sans-serif;
   line-height: 1.1;
   font-weight: bolder;
   color: inherit;
