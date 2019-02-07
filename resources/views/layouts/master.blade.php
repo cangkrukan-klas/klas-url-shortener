@@ -3,8 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -21,89 +20,53 @@
     <title>URL Shortener by KLAS</title>
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="{{ asset('css/materialize.css') }}" media="screen,projection"/>
+    <link type="text/css" href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link type="text/css" href="{{ asset('css/normalize.css') }}" rel="stylesheet">
     <style>
-        .row {
-            margin-bottom: 3%;
-        }
-
-        html {
-            position: relative;
-            min-height: 100%;
-        }
-
         body {
-            margin-bottom: 60px; /* Margin bottom by footer height */
-            background-color: white;
-            font-family: Nunito, Arial, sans-serif;
+            display: flex;
+            min-height: 100vh;
+            flex-direction: column;
         }
-
-        .footer {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            height: 60px; /* Set the fixed height of the footer here */
-            line-height: 60px; /* Vertically center the text there */
-            background-color: #f5f5f5;
-        }
-
-        h1, h2, h3, h4, h5, h6 {
-            font-family: Nunito, Arial, sans-serif;
-            line-height: 1.1;
-            font-weight: bolder;
-            color: inherit;
-        }
-
-        .py-4 {
-            padding-bottom: 0 !important;
+        main {
+            flex: 1 0 auto;
         }
     </style>
 </head>
-<body>
-<div id="app">
-    <main class="py-4">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-md-8">
-                    <main class="py-4" style="margin-top: 4%;">
-                        <div class="col-md-12">
-                            <div class="row justify-content-center">
-                                <a href="https://klas.or.id"><img class="img-logo" alt="KLAS LOGO"
-                                                                  src="{{ asset('img/logo.png') }}" height="100%"
-                                                                  width="auto"></a>
-                            </div>
-                            <div class="row justify-content-center">
-                                <h2><b>PEMENDEK TAUTAN SEDERHANA DAN CEPAT</b></h2>
-                                <p style="font-size: 18px;">oleh Kelompok Linux Arek Suroboyo</p>
-                            </div>
-                            @yield('content')
-                        </div>
+<body id="app">
+<header></header>
+<main><div class="container valign-wrapper">
+        <div class="row center-align" style="padding-top: 6%;">
+            <div class="col s12 m12 l12">
+                <div class="row center-align">
+                    <a href="https://klas.or.id"><img class="responsive-img" alt="KLAS LOGO"
+                                                      src="{{ asset('img/logo.png') }}"></a>
+                </div>
+                <div class="row center-align">
+                    <h4>PEMENDEK TAUTAN SEDERHANA DAN CEPAT</h4>
+                    <p style="font-size: 16px;">oleh Kelompok Linux Arek Suroboyo</p>
+                </div>
+                <div class="col s8 m8 l8 offset-s2 offset-m2 offset-l2 left-align">
+                    <main>
+                        @yield('content')
                     </main>
                 </div>
             </div>
         </div>
-    </main>
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="float-right">
-                2018
-            </div>
-            <div class="row justify-content-md-center" style="margin-bottom: 0;">
-                <div class="col-md-5">
-                    <span class="text-muted"><a href="https://github.com/fadhilyori/klas-url-shortener"><img alt="GitHub Logo"
-                                                                                               height="24px"
-                                                                                               width="auto"
-                                                                                               src="{{ asset('img/github/GitHub_Logo.png') }}"></a></span>
-                </div>
-                <div class="col-md-7">
-                    Tautan pendek dibuat
-                    : {{ (\App\DataStatistik::query()->where('nama', 'shortlinkgenerate')->first()->nilai) + (\App\DataStatistik::query()->where('nama', 'shortlinkcustom')->first()->nilai) }}
-                </div>
-            </div>
-        </div>
-    </footer>
-</div>
+    </div></main>
+<!-- Footer -->
+<footer class="footer-copyright">
+    <div class="row valign-wrapper center-align">
+        <div class="col s4 m4 l4">2018</div>
+        <div class="col s4 m4 l4">Tautan pendek dibuat
+            : {{ (\App\DataStatistik::query()->where('nama', 'shortlinkgenerate')->first()->nilai) + (\App\DataStatistik::query()->where('nama', 'shortlinkcustom')->first()->nilai) }}</div>
+        <div class="col s4 m4 l4"><span class="text-muted"><a
+                        href="https://github.com/fadhilyori/klas-url-shortener"><img alt="Github Repository" src="{{ asset("img/github/GitHub-Mark-32px.png") }}"></a></span></div>
+    </div>
+</footer>
+<script type="text/javascript" src="{{ asset('js/materialize.min.js') }}"></script>
+<script>  M.AutoInit();</script>
 @yield('jsscript')
 </body>
 </html>

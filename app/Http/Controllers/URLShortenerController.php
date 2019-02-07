@@ -5,14 +5,13 @@ namespace App\Http\Controllers;
 use App\CustomUrl;
 use App\DataStatistik;
 use App\ShortUrl;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 
 class URLShortenerController extends Controller
 {
 
-    function randomString($length = 3) {
+    protected function randomString($length = 3) {
         $str = "";
         $characters = array_merge(range('A','Z'), range('a','z'), range('0','9'));
         $max = count($characters) - 1;
@@ -25,40 +24,38 @@ class URLShortenerController extends Controller
 
     public function doShort(Request $request) {
         // Melakukan pemendekan link
-        $doGenerate = 0;
+        $doGenerate = 1;
         $result_2 = "";
         $url = $request->get('url');
         $customurl = $request->get('customurl');
         $parse = parse_url($customurl);
         if (isset($parse['scheme'])) {
-            $theList = array($parse['scheme'], "://", $parse['host']);
-            $customurl = str_replace($theList, "", $customurl);
+            $customurl = str_replace(array($parse['scheme'], "://", $parse['host']), "", $customurl);
         }
-        $pattern = "/[^a-zA-Z0-9 \. \-]/";
-        $customurl = preg_replace($pattern, "", $customurl);
+        $customurl = preg_replace("/[^a-zA-Z0-9 \. \-]/", "", $customurl);
         if ($customurl == "home" || $customurl == "login" || $customurl == "register") {
-            return view('telah-digunakan');
+            return view('welcome')->with("error", "Tautan kustom telah digunakan!");
         }
 
         // Check the url in database
-        try {
-            $su_q = ShortUrl::query()->where('url', $url)->firstOrFail();
-        } catch (QueryException $e) {
-            $doGenerate = 1;
-        } catch (ModelNotFoundException $e) {
-            $doGenerate = 1;
+        $url_id = 0;
+        foreach (ShortUrl::all() as $item) {
+            if (Crypt::decryptString($item->url) == $url) {
+                $doGenerate = 0;
+                $result = Crypt::decryptString($item->shorturl);
+                $url_id = $item->id;
+                break;
+            }
         }
-        if ($doGenerate == 0) {
-            $result = $su_q->shorturl;
-        } else {
+        if ($doGenerate == 1) {
             // Generate
-            $urlRand = $this->randomString();
-            $su_q = new ShortUrl;
-            $su_q->url = $url;
-            $su_q->shorturl = $urlRand;
+            $new_short_url = new ShortUrl;
+            $new_short_url->url = Crypt::encryptString($url);
+            $new_short_url->shorturl = Crypt::encryptString($this->randomString());
             try {
-                $su_q->save();
-                $result = $urlRand;
+                $new_short_url->save();
+                $result = Crypt::decryptString($new_short_url->shorturl);
+                $url_id = $new_short_url->id;
                 try {
                     $stat = DataStatistik::query()->where('nama', 'shortlinkgenerate')->firstOrFail();
                     $stat->update([
@@ -72,28 +69,26 @@ class URLShortenerController extends Controller
                     $stat->save();
                 }
             } catch (\Exception $e) {
-                return redirect('/');
+                return $e->getMessage() . "<br> at line " . $e->getLine();
             }
         }
 
+        // Custom URL Section
+
         if ($customurl != "" || $customurl != null) {
-            $isNewCusUrl = 0;
-            try {
-                CustomUrl::query()->where('customurl', $customurl)->firstOrFail();
-            } catch (QueryException $e) {
-                $isNewCusUrl = 1;
-            } catch (ModelNotFoundException $e) {
-                $isNewCusUrl = 1;
+            $isNewCusUrl = 1;
+            foreach (CustomUrl::all() as $item) {
+                if (Crypt::decryptString($item->customurl) == $customurl) {
+                    return view('welcome')->with("error", "Tautan kustom telah digunakan!");
+                }
             }
 
-            if ($isNewCusUrl == 0) {
-                return view('telah-digunakan');
-            } else {
-                $newCusUrl = new CustomUrl;
-                $newCusUrl->url_id = $su_q->id;
-                $newCusUrl->customurl = $customurl;
+            if ($isNewCusUrl == 1) {
+                $new_custom_url = new CustomUrl;
+                $new_custom_url->url_id = $url_id;
+                $new_custom_url->customurl = Crypt::encryptString($customurl);
                 try {
-                    $newCusUrl->save();
+                    $new_custom_url->save();
                     $result_2 = $customurl;
                     try {
                         $stat = DataStatistik::query()->where('nama', 'shortlinkcustom')->firstOrFail();
@@ -108,7 +103,7 @@ class URLShortenerController extends Controller
                         $stat->save();
                     }
                 } catch (\Exception $e) {
-                    return redirect('/');
+                    return $e->getMessage();
                 }
             }
         }
@@ -123,22 +118,21 @@ class URLShortenerController extends Controller
 
     public function go($shorturl) {
         $url = "";
-        $page = "redirect";
-        try {
-            $su_q = ShortUrl::query()->where('shorturl', $shorturl)->firstOrFail();
-            $url = $su_q->url;
-        } catch (\Exception $e) {
-            try {
-                $su_q = CustomUrl::query()->where('customurl', $shorturl)->firstOrFail();
-                $su_q = ShortUrl::query()->findOrFail($su_q->url_id);
-//                $su_q = CustomUrl::query()->where('customurl', $shorturl)->with('user_id')->firstOrFail();
-                $url = $su_q->url;
-            } catch (\Exception $e) {
-                $page = "404";
+        foreach (ShortUrl::all() as $item) {
+            if (Crypt::decryptString($item->shorturl) == $shorturl) {
+                $url = Crypt::decryptString($item->url);
             }
         }
-//        return Response(['url' => $url, 'page' => $page]); // for debugging only
-        if ($url != "") {
+        if ($url == "") {
+            foreach (CustomUrl::all() as $item) {
+                if (Crypt::decryptString($item->customurl) == $shorturl) {
+                    $url = Crypt::decryptString(ShortUrl::find($item->url_id)->url);
+                }
+            }
+        }
+        if ($url == "") {
+            return view('welcome')->with("error", "Tautan pendek yang anda masukkan tidak ditemukan");
+        } else {
             try {
                 $stat = DataStatistik::query()->where('nama', 'shortlinkakses')->firstOrFail();
                 $stat->update([
@@ -152,6 +146,6 @@ class URLShortenerController extends Controller
                 $stat->save();
             }
         }
-        return view($page, ['url' => $url]);
+        return view("redirect", ['url' => $url]);
     }
 }

@@ -16,6 +16,6 @@ class CustomUrl extends Model
     ];
 
     public function url_id() {
-        return $this->belongsTo(ShortUrl::class);
+        return $this->belongsTo(ShortUrl::class, 'url_id', 'id');
     }
 }
