@@ -64,7 +64,7 @@
     </ul>
 </header>
 <main>
-    <div class="container-fluid valign-wrapper">
+    <div class="container valign-wrapper">
         <div class="row center-align" style="padding-top: 6%;">
             <div class="col s12 m12 l12">
                 <div class="row center-align hide-on-small-only">
