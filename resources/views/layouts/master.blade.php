@@ -63,7 +63,8 @@
         <li><a href="#!">Tautan pendek dibuat : {{ (\App\DataStatistik::query()->where('nama', 'shortlinkgenerate')->first()->nilai) + (\App\DataStatistik::query()->where('nama', 'shortlinkcustom')->first()->nilai) }}</a></li>
     </ul>
 </header>
-<main><div class="container valign-wrapper">
+<main>
+    <div class="container valign-wrapper">
         <div class="row center-align" style="padding-top: 6%;">
             <div class="col s12 m12 l12">
                 <div class="row center-align hide-on-small-only">
@@ -74,7 +75,7 @@
                     <h4>PEMENDEK TAUTAN SEDERHANA DAN CEPAT</h4>
                     <p class="hide-on-small-only">oleh Kelompok Linux Arek Suroboyo</p>
                 </div>
-                <div class="col s8 m8 l8 offset-s2 offset-m2 offset-l2 left-align">
+                <div class="col s12 m8 l8 offset-s0 offset-m2 offset-l2 left-align">
                     <main>
                         @yield('content')
                     </main>
