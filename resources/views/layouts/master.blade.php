@@ -32,21 +32,27 @@
         main {
             flex: 1 0 auto;
         }
+
+        .dropdown-custom {
+            top: 56px !important;
+            width: 100% !important;
+            height: auto !important;
+        }
     </style>
 </head>
 <body id="app">
 <header>
     <div class="navbar-fixed hide-on-med-and-up">
         <nav class="teal z-depth-0">
-            <div class="nav-wrapper">
-                <a href="#" data-target='dropdown1' class='dropdown-trigger'><i class="material-icons">menu</i></a>
-                <a href="https://klas.or.id" class="brand-logo"><img height="56px" width="auto" alt="KLAS LOGO"
-                                                                                  src="{{ asset('img/logo.png') }}"></a>
+            <div class="nav-wrapper container">
+                <a href="https://klas.or.id" class="brand-logo center"><img height="54px" width="auto" alt="KLAS LOGO"
+                                                                            src="{{ asset('img/logo.png') }}"></a>
+                <a href="#" data-target='dropdown1' class='dropdown-trigger left'><i class="material-icons">menu</i></a>
             </div>
         </nav>
     </div>
 
-    <ul id='dropdown1' class='dropdown-content'>
+    <ul id='dropdown1' class='dropdown-content dropdown-custom'>
         <li><a class="valign-wrapper" style="display: flex;" href="https://github.com/cangkrukan-klas/klas-url-shortener">
                 <img alt="Github Repository" style="padding: 2px;" width="30px" height="auto" src="{{ asset("img/github/GitHub-Mark-32px.png") }}">
                 GitHub Repository
