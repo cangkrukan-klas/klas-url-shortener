@@ -118,16 +118,16 @@ class URLShortenerController extends Controller
 
     public function go($shorturl) {
         $url = "";
-        foreach (ShortUrl::all() as $item) {
-            if (Crypt::decryptString($item->shorturl) == $shorturl) {
-                $url = Crypt::decryptString($item->url);
-            }
-        }
-        if ($url == "") {
-            foreach (CustomUrl::all() as $item) {
-                if (Crypt::decryptString($item->customurl) == $shorturl) {
-                    $url = Crypt::decryptString(ShortUrl::find($item->url_id)->url);
+        $short_urls = ShortUrl::with('custom_url')->get();
+        $short_urls->map(function ($short_url) {
+            return $short_url->custom_url;
+        });
+        foreach($short_urls as $item) {
+            foreach($item->custom_url as $cus_item) {
+                if (Crypt::decryptString($item->shorturl) == $shorturl || Crypt::decryptString($cus_item->customurl) == $shorturl) {
+                    $url = Crypt::decryptString($item->url);
                 }
+                break;
             }
         }
         if ($url == "") {
