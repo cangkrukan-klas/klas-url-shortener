@@ -4,12 +4,9 @@
         @csrf
         <div class="row">
             <div class="input-field">
-                <input id="urlform" type="url" class="validate" name="url" value="{{ old('url') }}"
+                <input id="urlform" type="url" class="validate" name="url" value="{{ isset($url) ? $url : "" }}"
                        placeholder="https://" required autofocus>
                 <label for="urlform">{{ __('URL') }}</label>
-                @if ($errors->has('url'))
-                    <span class="helper-text" data-error="Wrong URL"><strong>{{ $errors->first('url') }}</strong></span>
-                @endif
             </div>
         </div>
 

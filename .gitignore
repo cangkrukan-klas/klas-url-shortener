@@ -13,3 +13,4 @@ yarn-error.log
 .env
 .phpunit.result.cache
 .directory
+/resources/views/development_only.blade.php
