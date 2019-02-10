@@ -11,21 +11,11 @@ use Illuminate\Support\Facades\Crypt;
 class URLShortenerController extends Controller
 {
 
-    protected function randomString($length = 3) {
-        $str = "";
-        $characters = array_merge(range('A','Z'), range('a','z'), range('0','9'));
-        $max = count($characters) - 1;
-        for ($i = 0; $i < $length; $i++) {
-            $rand = mt_rand(0, $max);
-            $str .= $characters[$rand];
-        }
-        return $str;
-    }
-
-    public function doShort(Request $request) {
+    public function doShort(Request $request)
+    {
         // Melakukan pemendekan link
         $is_new_short_url = 1;
-        $result_customurl = "";
+        $result_custom_url = "";
         $is_new_custom_url = 1;
         $url = $request->get('url');
         $customurl = $request->get('customurl');
@@ -45,13 +35,13 @@ class URLShortenerController extends Controller
                 $url_id = $item->id;
                 $is_new_short_url = 0;
                 if ($customurl != "" || $customurl != null) {
-                    foreach($item->custom_url as $cus_item) {
+                    foreach ($item->custom_url as $cus_item) {
                         if (Crypt::decryptString($cus_item->customurl) == $customurl) {
                             return view('welcome', ['url' => $url])->with("error", "Tautan kustom telah digunakan!");
                         }
                     }
                 }
-                $result_shorturl = Crypt::decryptString($item->shorturl);
+                $result_short_url = Crypt::decryptString($item->shorturl);
                 break;
             }
         }
@@ -61,7 +51,7 @@ class URLShortenerController extends Controller
             $new_short_url->url = Crypt::encryptString($url);
             $new_short_url->shorturl = Crypt::encryptString($this->randomString());
             $new_short_url->save();
-            $result_shorturl = Crypt::decryptString($new_short_url->shorturl);
+            $result_short_url = Crypt::decryptString($new_short_url->shorturl);
             $stat = DataStatistik::query()->where('nama', 'shortlinkgenerate')->firstOrFail();
             $stat->update([
                 'nama' => $stat->nama,
@@ -73,7 +63,7 @@ class URLShortenerController extends Controller
             $new_custom_url->url_id = $url_id;
             $new_custom_url->customurl = Crypt::encryptString($customurl);
             $new_custom_url->save();
-            $result_customurl = $customurl;
+            $result_custom_url = $customurl;
             $stat = DataStatistik::query()->where('nama', 'shortlinkcustom')->firstOrFail();
             $stat->update([
                 'nama' => $stat->nama,
@@ -83,21 +73,34 @@ class URLShortenerController extends Controller
 
         $resp = [
             'url' => $url,
-            'shorturl' => $result_shorturl,
-            'customurl' => $result_customurl
+            'shorturl' => $result_short_url,
+            'customurl' => $result_custom_url
         ];
 
         return view('result', ['result' => $resp]);
     }
 
-    public function go($shorturl) {
+    protected function randomString($length = 3)
+    {
+        $str = "";
+        $characters = array_merge(range('A', 'Z'), range('a', 'z'), range('0', '9'));
+        $max = count($characters) - 1;
+        for ($i = 0; $i < $length; $i++) {
+            $rand = mt_rand(0, $max);
+            $str .= $characters[$rand];
+        }
+        return $str;
+    }
+
+    public function go($shorturl)
+    {
         $url = "";
         $short_urls = ShortUrl::with('custom_url')->get();
         $short_urls->map(function ($short_url) {
             return $short_url->custom_url;
         });
-        foreach($short_urls as $item) {
-            foreach($item->custom_url as $cus_item) {
+        foreach ($short_urls as $item) {
+            foreach ($item->custom_url as $cus_item) {
                 if (Crypt::decryptString($cus_item->customurl) == $shorturl) {
                     $url = Crypt::decryptString($item->url);
                     break 2;
