@@ -11,18 +11,13 @@
     <script src="{{ asset('js/app.js') }}" defer></script>
 
     <!-- Icons -->
-    <link rel="icon"
-          href="https://i0.wp.com/klas.or.id/wp-content/uploads/2015/10/cropped-g4067.png?fit=32%2C32&amp;ssl=1"
-          sizes="32x32">
-    <link rel="icon"
-          href="https://i1.wp.com/klas.or.id/wp-content/uploads/2015/10/cropped-g4067.png?fit=192%2C192&amp;ssl=1"
-          sizes="192x192">
+    <link rel="icon" href="{{ asset('img/logo-32x32.png') }}" sizes="32x32">
     <title>URL Shortener by KLAS</title>
 
     <!-- Styles -->
+    <link type="text/css" href="{{ asset('css/normalize.css') }}" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="{{ asset('css/materialize.css') }}" media="screen,projection"/>
     <link type="text/css" href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link type="text/css" href="{{ asset('css/normalize.css') }}" rel="stylesheet">
     <style>
         body {
             display: flex;
