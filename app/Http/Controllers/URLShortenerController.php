@@ -25,7 +25,7 @@ class URLShortenerController extends Controller
         }
         $customurl = preg_replace("/[^a-zA-Z0-9 \. \-]/", "", $customurl);
         if ($customurl == "home" || $customurl == "login" || $customurl == "register") {
-            return view('welcome')->with("error", "Tautan kustom tidak dapat digunakan!");
+            return view('pages/home')->with("error", "Tautan kustom tidak dapat digunakan!");
         }
         # Check the URL
         $url_id = 0;
@@ -37,7 +37,7 @@ class URLShortenerController extends Controller
                 if ($customurl != "" || $customurl != null) {
                     foreach ($item->custom_url as $cus_item) {
                         if (Crypt::decryptString($cus_item->customurl) == $customurl) {
-                            return view('welcome', ['url' => $url])->with("error", "Tautan kustom telah digunakan!");
+                            return view('pages/home', ['url' => $url])->with("error", "Tautan kustom telah digunakan!");
                         }
                     }
                 }
@@ -57,6 +57,7 @@ class URLShortenerController extends Controller
                 'nama' => $stat->nama,
                 'nilai' => $stat->nilai + 1
             ]);
+            $url_id = $new_short_url->id;
         }
         if ($is_new_custom_url == 1) {
             $new_custom_url = new CustomUrl;
@@ -77,7 +78,7 @@ class URLShortenerController extends Controller
             'customurl' => $result_custom_url
         ];
 
-        return view('result', ['result' => $resp]);
+        return view('pages/result', ['result' => $resp]);
     }
 
     protected function randomString($length = 3)
@@ -111,9 +112,8 @@ class URLShortenerController extends Controller
                 break;
             }
         }
-        dd($url, $shorturl);
         if ($url == "") {
-            return view('welcome')->with("error", "Tautan pendek yang anda masukkan tidak ditemukan");
+            return view('pages/home')->with("error", "Tautan pendek yang anda masukkan tidak ditemukan");
         } else {
             $stat = DataStatistik::query()->where('nama', 'shortlinkakses')->first();
             $stat->update([
@@ -121,6 +121,6 @@ class URLShortenerController extends Controller
                 'nilai' => $stat->nilai + 1
             ]);
         }
-        return view("redirect", ['url' => $url]);
+        return view('pages/redirect', ['url' => $url]);
     }
 }
