@@ -64,7 +64,7 @@
                 </div>
 
                 <div class="row input-field">
-                    <input id="name" type="email" class="validate" name="name" value="{{ old('name') }}" required>
+                    <input id="name" type="text" class="validate" name="name" value="{{ old('name') }}" required>
                     <label for="name">{{ __('Name') }}</label>
                 </div>
 

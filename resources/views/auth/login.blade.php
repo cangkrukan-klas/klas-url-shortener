@@ -84,7 +84,6 @@
 
                 <div class="row">
                     <button class="btn waves-effect waves-light" type="submit" name="action">{{ __('Login') }}</button>
-                    <span class="valign-wrapper right">Lupa password ? <br><a href="{{ route('password.request') }}">Reset Password</a></span>
                 </div>
             </form>
         </div>
@@ -126,7 +125,6 @@
 
                 <div class="row">
                     <button class="btn waves-effect waves-light" type="submit" name="action">{{ __('Login') }}</button>
-                    <span class="valign-wrapper right">Lupa password ? <br><a href="{{ route('password.request') }}">Reset Password</a></span>
                 </div>
             </form>
         </div>
