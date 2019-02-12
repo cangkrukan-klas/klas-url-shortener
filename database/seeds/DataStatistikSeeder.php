@@ -12,8 +12,8 @@ class DataStatistikSeeder extends Seeder
      */
     public function run()
     {
-        collect(['shortlinkgenerate', 'shortlinkcustom'])->each(function ($data) {
-            DataStatistik::create([
+        collect(['shortlinkgenerate', 'shortlinkcustom', 'shortlinkakses'])->each(function ($data) {
+            DataStatistik::query()->create([
                 'nama' => $data,
                 'nilai' => 0,
             ]);

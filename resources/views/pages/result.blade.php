@@ -15,7 +15,7 @@
         </div>
 
         <div class="row center-align">
-                <button type="submit" class="btn waves-effect waves-light" onclick="window.location = '{{ route('home') }}';">
+                <button type="submit" class="btn waves-effect waves-light" onclick="window.location = '{{ url('/') }}';">
                     {{ __('Home') }}
                 </button>
         </div>

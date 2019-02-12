@@ -31,13 +31,6 @@ klas-url-shortener adalah Pemendek Tautan Sederhana dan Cepat dibuat oleh Kelomp
 <li>buka terminal, tulis perintah git clone (url yang sudah di copy) </li>
 </ul>
 
-## Cara Clone klas-url-shortener
-
-<ul style="list-style-type: none; display: inline;">
-<li>Website</li>
-<li>Facebook</li>
-</ul>
-
 ## Kunjungi Kami
 
 <ul style="list-style-type: none; display: inline;">
