@@ -29,7 +29,8 @@ class URLShortenerController extends Controller
         }
         # Check the URL
         $url_id = 0;
-        foreach (ShortUrl::all() as $item) {
+        $short_url_query_all = ShortUrl::all();
+        foreach ($short_url_query_all as $item) {
             if (Crypt::decryptString($item->url) == $url) {
 //                dd(Crypt::decryptString($item->url), $url);
                 $url_id = $item->id;
@@ -47,9 +48,21 @@ class URLShortenerController extends Controller
         }
         // Generate
         if ($is_new_short_url == 1) {
+            $regenerate_shorturl = 1;
+            $random_string_shorturl = "";
+            while ($regenerate_shorturl == 1) {
+                $regenerate_shorturl = 0;
+                $random_string_shorturl = $this->randomString();
+                foreach ($short_url_query_all as $item) {
+                    if (Crypt::decryptString($item->shorturl) == $random_string_shorturl) {
+                        $regenerate_shorturl = 1;
+                        break;
+                    }
+                }
+            }
             $new_short_url = new ShortUrl;
             $new_short_url->url = Crypt::encryptString($url);
-            $new_short_url->shorturl = Crypt::encryptString($this->randomString());
+            $new_short_url->shorturl = Crypt::encryptString($random_string_shorturl);
             $new_short_url->save();
             $result_short_url = Crypt::decryptString($new_short_url->shorturl);
             $stat = DataStatistik::query()->where('nama', 'shortlinkgenerate')->firstOrFail();
