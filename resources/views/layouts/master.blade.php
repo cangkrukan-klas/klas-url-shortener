@@ -14,9 +14,6 @@
     <link type="text/css" rel="stylesheet" href="{{ asset('css/materialize.css') }}" media="screen,projection"/>
     <link type="text/css" href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style> body {display: flex;min-height: 100vh;flex-direction: column;}  main {flex: 1 0 auto;}  .dropdown-custom {top: 56px !important;width: 100% !important;height: auto !important;}</style>
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/materialize.min.js') }}"></script>
 </head>
 <body id="app">
 <header>
@@ -71,6 +68,8 @@
                         href="https://github.com/cangkrukan-klas/klas-url-shortener"><img alt="Github Repository" src="{{ asset("img/github/GitHub-Mark-32px_compressed.png") }}" width="32px" height="32px"></a></span></div>
     </div>
 </footer>
+<script type="text/javascript" src="{{ asset('js/materialize.min.js') }}"></script>
+<script src="{{ asset('js/app.js') }}"></script>
 @yield('jsscript')
 </body>
 </html>

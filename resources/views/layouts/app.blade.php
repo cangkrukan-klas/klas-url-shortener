@@ -35,17 +35,6 @@
             }
         }
     </style>
-
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-    <script type="text/javascript" src="{{ asset('js/materialize.min.js') }}"></script>
-    <script>
-        M.AutoInit();
-        $(document).ready(function(){
-            $('.sidenav').sidenav();
-        });
-    </script>
-    @yield('jsscript')
 </head>
 <body id="app">
 <header>
@@ -77,5 +66,8 @@
 </main>
 <!-- Footer -->
 <footer></footer>
+<script type="text/javascript" src="{{ asset('js/materialize.min.js') }}"></script>
+<script src="{{ asset('js/app.js') }}"></script>
+@yield('jsscript')
 </body>
 </html>
