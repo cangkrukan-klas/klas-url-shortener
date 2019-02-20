@@ -26,9 +26,14 @@ Route::prefix('/admin')->name('admin.')->group(function () {
     Route::get('/dashboard', 'AdminController@index')->name('dashboard');
     Route::get('/shorturl', 'AdminController@shorturl')->name('shorturl');
     Route::get('/customurl', 'AdminController@customurl')->name('customurl');
+    Route::get('/insert-data', 'AdminController@insert_shorturl_page')->name('shorturl.insert.page');
+    Route::get('/insert-data-custom', 'AdminController@insert_customurl_page')->name('customurl.insert.page');
 
     Route::get('/shorturl/delete/{id}', 'AdminController@delete_shorturl')->name('shorturl.delete');
     Route::get('/customurl/delete/{id}', 'AdminController@delete_customurl')->name('customurl.delete');
+
+    Route::post('/insert-data', 'AdminController@insert_shorturl')->name('shorturl.insert');
+    Route::post('/insert-data-custom', 'AdminController@insert_customurl')->name('customurl.insert');
 });
 
 Route::get('/{shorturl}', 'URLShortenerController@go');

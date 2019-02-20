@@ -56,6 +56,8 @@
         <li><a href="{{ route('admin.dashboard') }}" class="waves-effect"><i class="material-icons">dashboard</i>Dasboard</a></li>
         <li><a href="{{ route('admin.shorturl') }}" class="waves-effect"><i class="material-icons">table</i>Tautan Pendek</a></li>
         <li><a href="{{ route('admin.customurl') }}" class="waves-effect"><i class="material-icons">table</i>Tautan Custom</a></li>
+        <li><a href="{{ route('admin.shorturl.insert.page') }}" class="waves-effect"><i class="material-icons">add</i>Tambah Data</a></li>
+        <li><a href="{{ route('admin.customurl.insert.page') }}" class="waves-effect"><i class="material-icons">add</i>Tambah Data (Kustom)</a></li>
         <li><div class="divider"></div></li>
         <li><a class="subheader">Opsi</a></li>
         <li><a href="{{ url('logout') }}" class="waves-effect">Logout</a></li>

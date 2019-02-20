@@ -73,7 +73,12 @@ class AdminController extends Controller
         return view('pages/admin-customurl', ['data' => $data]);
     }
 
-    public function delete_shorturl($id) {
+    public function insert_shorturl_page() {
+        return view('pages/admin-insert-data');
+    }
+
+    public function delete_shorturl($id)
+    {
         if (Auth::check()) {
             try {
                 $del = ShortUrl::query()->find($id)->delete();
@@ -84,7 +89,8 @@ class AdminController extends Controller
         return redirect(route('admin.shorturl'));
     }
 
-    public function delete_customurl($id) {
+    public function delete_customurl($id)
+    {
         if (Auth::check()) {
             try {
                 $del = CustomUrl::query()->find($id)->delete();
@@ -93,5 +99,105 @@ class AdminController extends Controller
             }
         }
         return redirect(route('admin.customurl'));
+    }
+
+    public function insert_shorturl(Request $request)
+    {
+        $is_new_short_url = 1;
+        $is_new_custom_url = 1;
+
+        // Get the data
+        $url = $request->get('url');
+        $shorturl = $request->get('shorturl');
+        $customurl = $request->get('customurl');
+        if ($customurl == "") {
+            $is_new_custom_url = 0;
+        }
+        $created_at = $request->get('created_at');
+        $parse = parse_url($customurl);
+
+        if (isset($parse['scheme'])) {
+            $customurl = str_replace(array($parse['scheme'], "://", $parse['host']), "", $customurl);
+        }
+        $customurl = preg_replace("/[^a-zA-Z0-9 \. \-]/", "", $customurl);
+        if ($customurl == "home" || $customurl == "login" || $customurl == "register") {
+            return redirect(route('admin.shorturl.insert.page'));
+        }
+        # Check the URL
+        $url_id = 0;
+        $short_url_query_all = ShortUrl::all();
+        foreach ($short_url_query_all as $item) {
+            if (Crypt::decryptString($item->url) == $url) {
+                $url_id = $item->id;
+                $is_new_short_url = 0;
+                if ($customurl != "" || $customurl != null) {
+                    foreach ($item->custom_url as $cus_item) {
+                        if (Crypt::decryptString($cus_item->customurl) == $customurl) {
+                            return redirect(route('admin.shorturl.insert.page'))->with("error", "Tautan kustom telah digunakan!");
+                        }
+                    }
+                }
+                break;
+            }
+        }
+        // Generate
+        if ($is_new_short_url == 1) {
+            $check_shorturl = $shorturl;
+            foreach ($short_url_query_all as $item) {
+                if (Crypt::decryptString($item->shorturl) == $check_shorturl) {
+                    return redirect(route('admin.shorturl.insert.page'))->with("error", "Tautan kustom telah digunakan!");
+                }
+            }
+            $new_short_url = new ShortUrl;
+            $new_short_url->url = Crypt::encryptString($url);
+            $new_short_url->shorturl = Crypt::encryptString($check_shorturl);
+            if ($created_at != "") {
+                $new_short_url->created_at = $created_at;
+                $new_short_url->updated_at = $created_at;
+            }
+            $new_short_url->save();
+            $url_id = $new_short_url->id;
+        }
+        if ($is_new_custom_url == 1) {
+            $new_custom_url = new CustomUrl;
+            $new_custom_url->url_id = $url_id;
+            $new_custom_url->customurl = Crypt::encryptString($customurl);
+            if ($created_at != "") {
+                $new_custom_url->created_at = $created_at;
+                $new_custom_url->updated_at = $created_at;
+            }
+            $new_custom_url->save();
+        }
+
+        return redirect(route('admin.shorturl.insert'))->with("success", "Tautan pendek telah ditambahkan!");
+    }
+
+    public function insert_customurl_page() {
+        return view('pages/admin-insert-data-custom');
+    }
+
+    public function insert_customurl(Request $request) {
+        $url_id = $request->get('url_id');
+        $customurl = $request->get('customurl');
+        $created_at = $request->get('created_at');
+        $parse = parse_url($customurl);
+
+        if (isset($parse['scheme'])) {
+            $customurl = str_replace(array($parse['scheme'], "://", $parse['host']), "", $customurl);
+        }
+        $customurl = preg_replace("/[^a-zA-Z0-9 \. \-]/", "", $customurl);
+        if ($customurl == "home" || $customurl == "login" || $customurl == "register") {
+            return redirect(route('admin.shorturl_insert'));
+        }
+
+        $new_custom_url = new CustomUrl;
+        $new_custom_url->url_id = $url_id;
+        $new_custom_url->customurl = Crypt::encryptString($customurl);
+        if ($created_at != "") {
+            $new_custom_url->created_at = $created_at;
+            $new_custom_url->updated_at = $created_at;
+        }
+        $new_custom_url->save();
+        return redirect(route('admin.customurl.insert'))->with("success", "Tautan kustom telah ditambahkan!");
     }
 }

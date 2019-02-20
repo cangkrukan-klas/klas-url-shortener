@@ -7,10 +7,11 @@
                 <div class="card-title">Tautan Pendek</div>
                 <div class="divider"></div>
                 <div class="row">
-                    <table class="striped responsive-table">
+                    <table class="striped">
                         <thead>
                         <tr>
                             <th>No</th>
+                            <th>ID</th>
                             <th>URL</th>
                             <th>Tautan Pendek</th>
                             <th>Tanggal</th>
@@ -21,6 +22,7 @@
                         @foreach($data as $item)
                         <tr>
                             <td>{{ $item->no }}</td>
+                            <td>{{ $item->id }}</td>
                             <td>{{ $item->url }}</td>
                             <td>{{ $item->shorturl }}</td>
                             <td>{{ $item->created_at }}</td>
