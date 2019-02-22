@@ -1,1 +1,80 @@
+.dropdown-custom {
+  top: 56px !important;
+  width: 100% !important;
+  height: auto !important
+}
 
+.card-footer {
+  padding: 1%;
+}
+
+main {
+  margin-top: 4%;
+}
+
+.text-title {
+  margin-top: 2%;
+}
+
+.text-description {
+  margin-bottom: 0;
+}
+
+/*Extra small devices (portrait phones, less than 576px) XS */
+@media (max-width: 575.98px) {
+  .hide-on-xs, .hide-on-sm-down, .hide-on-lg-down, .hide-on-med-down {
+    display: none !important;
+  }
+
+  .text-title {
+    margin-top: 14%;
+  }
+
+  .card-no-small {
+    box-shadow: 0 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+  }
+}
+
+/*Small devices (landscape phones, 576px and up) SM */
+@media (min-width: 576px) and (max-width: 767.98px) {
+  .hide-on-sm, .hide-on-sm-up, .hide-on-sm-down, .hide-on-lg-down, .hide-on-med-down {
+    display: none !important;
+  }
+
+  .text-title {
+    margin-top: 14%;
+  }
+
+  .card-no-small {
+    box-shadow: 0 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+  }
+}
+
+/*Medium devices (tablets, 768px and up) MD */
+@media (min-width: 768px) and (max-width: 991.98px) {
+  .hide-on-med, .hide-on-sm-up, .hide-on-med-up, .hide-on-med-down, .hide-on-lg-down {
+    display: none !important;
+  }
+
+  .text-title {
+    margin-top: 14%;
+  }
+}
+
+/*Large devices (desktops, 992px and up) LG*/
+@media (min-width: 992px) and (max-width: 1199.98px) {
+  .hide-on-lg, .hide-on-sm-up, .hide-on-med-up, .hide-on-lg-up, .hide-on-lg-down {
+    display: none !important;
+  }
+}
+
+/*Extra large devices (large desktops, 1200px and up) XL*/
+@media (min-width: 1200px) {
+  .hide-on-xl, .hide-on-sm-up, .hide-on-med-up, .hide-on-lg-up {
+    display: none !important;
+  }
+}
