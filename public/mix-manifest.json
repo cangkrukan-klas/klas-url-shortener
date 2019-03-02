@@ -1,13 +1,4 @@
 {
     "/js/app.js": "/js/app.js",
-    "/css/bootstrap.css": "/css/bootstrap.css",
-    "/css/app.css": "/css/app.css",
-    "/css/fontawesome.min.css": "/css/fontawesome.min.css",
-    "/css/brands.min.css": "/css/brands.min.css",
-    "/css/solid.min.css": "/css/solid.min.css",
-    "/js/jquery.slim.min.js": "/js/jquery.slim.min.js",
-    "/js/bootstrap.min.js": "/js/bootstrap.min.js",
-    "/js/fontawesome.min.js": "/js/fontawesome.min.js",
-    "/js/brands.min.js": "/js/brands.min.js",
-    "/js/solid.min.js": "/js/solid.min.js"
+    "/css/app.css": "/css/app.css"
 }
