@@ -20,13 +20,10 @@
         "vue-template-compiler": "^2.5.22"
     },
     "dependencies": {
-        "@fortawesome/fontawesome-free": "^5.7.2",
         "ajv": "^6.6.2",
-        "bootstrap": "^4.3.1",
         "bootstrap-sass": "^3.4.0",
         "imagemin": "^5.3.1",
         "jquery": "^3.3.1",
-        "jquery-slim": "^3.0.0",
         "popper.js": "^1.14.7"
     }
 }

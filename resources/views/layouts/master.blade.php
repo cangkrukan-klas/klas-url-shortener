@@ -10,11 +10,9 @@
     <link rel="icon" href="{{ asset('img/logo-32x32.png') }}" sizes="32x32">
     <title>URL Shortener by KLAS</title>
     <!-- Styles -->
-    <link type="text/css" href="{{ asset('css/bootstrap.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link type="text/css" href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link type="text/css" href="{{ asset('css/fontawesome.min.css') }}" rel="stylesheet">
-    <link type="text/css" href="{{ asset('css/brands.min.css') }}" rel="stylesheet">
-    <link type="text/css" href="{{ asset('css/solid.min.css') }}" rel="stylesheet">
 
 </head>
 <body id="app">
@@ -76,19 +74,13 @@
         <div class="col-sm-4 col-md-4 col-lg-4">Tautan pendek dibuat
             : {{ (\App\DataStatistik::query()->where('nama', 'shortlinkgenerate')->first()->nilai) + (\App\DataStatistik::query()->where('nama', 'shortlinkcustom')->first()->nilai) }}</div>
         <div class="col-sm-4 col-md-4 col-lg-4"><span class="text-muted"><a
-                        href="https://github.com/cangkrukan-klas/klas-url-shortener"><img alt="Github Repository"
-                                                                                          src="{{ asset("img/github/GitHub-Mark-32px_compressed.png") }}"
-                                                                                          width="32px"
-                                                                                          height="32px"></a></span>
+                        href="https://github.com/cangkrukan-klas/klas-url-shortener"><i class="fab fa-github fa-2x" style="color: black"></i></a></span>
         </div>
     </div>
 </footer>
-<script type="text/javascript" src="{{ asset('js/jquery.slim.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('js/bootstrap.min.js') }}"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
-<script type="text/javascript" src="{{ asset('js/fontawesome.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('js/brands.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('js/solid.min.js') }}"></script>
 @yield('jsscript')
 </body>
 </html>
