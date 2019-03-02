@@ -1,33 +1,40 @@
 @extends('layouts.master')
 @section('content')
-        <div class="row">
-            <div class="input-field">
-                <input id="urlform" type="url" class="validate" name="url" value="{{ $result['url'] }}">
-                <label for="urlform">{{ __('URL') }}</label>
+    <div class="card shadow-sm">
+        <div class="card-body bg-light">
+            <div class="row text-center" style="padding-bottom: 15px">
+                <div class="col">
+                    <span class="text-title align-middle" style="font-size: 1.4rem">Tautan Pendek Anda</span>
+                </div>
+            </div>
+            <div class=" row form-group">
+                <div class="input-group col-sm-12 col-md-8 col-lg-8 offset-md-2 offset-lg-2">
+                    <input id="urlshortform" type="text" class="form-control" name="shorturl"
+                           value="https://{{ env('APP_DOMAIN') . "/" . ($result['customurl'] == "" ? $result['shorturl'] : $result['customurl']) }}"
+                           contenteditable="false" aria-describedby="urlHelp">
+                    <div class="input-group-append">
+                        <div class="input-group-text" style="padding: 0;"><button class="btn" style="padding: 0 20px 0 20px;" onclick="copytoclipboard()"><i class="fa fa-copy"></i></button></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col-2 mx-auto">
+                    <button type="submit" class="btn btn-primary" onclick="window.location = '{{ url('/') }}';">
+                        {{ __('Beranda') }}
+                    </button>
+                </div>
             </div>
         </div>
-
-        <div class="row" id="bg_result">
-            <div class="input-field">
-                <input id="resultform" type="text" onclick="copytoclipboard()" class="validate" name="result" value="https://{{ env('APP_DOMAIN') . "/" . ($result['customurl'] == "" ? $result['shorturl'] : $result['customurl']) }}">
-                <label for="resultform">{{ __('Short URL') }}</label>
-            </div>
-        </div>
-
-        <div class="row center-align">
-                <button type="submit" class="btn waves-effect waves-light" onclick="window.location = '{{ url('/') }}';">
-                    {{ __('Home') }}
-                </button>
-        </div>
+    </div>
 @endsection
-
 @section('jsscript')
     <script>
         function copytoclipboard() {
-            let copyText = document.getElementById("resultform");
+            let copyText = document.getElementById("urlshortform");
             copyText.select();
             document.execCommand("copy");
-            M.toast({html: 'Tautan pendek telah disalin!', displayLength: 3000})
+            document.getElementById('urlHelp').innerHTML = "Berhasil disalin!";
         }
     </script>
 @endsection
