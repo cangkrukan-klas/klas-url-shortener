@@ -61,7 +61,7 @@
             <div class="col-12 text-center text-description"><p>oleh Kelompok Linux Arek Suroboyo</p></div>
         </div>
         <div class="row">
-            <div class="col-sm-12 col-md-8 col-lg-8 offset-sm-0 offset-md-2 offset-lg-2 text-left">
+            <div class="col-sm-12 col-md-12 col-lg-8 offset-sm-0 offset-md-0 offset-lg-2 text-left">
                 <main style="margin-top: 0;">
                     @yield('content')
                 </main>

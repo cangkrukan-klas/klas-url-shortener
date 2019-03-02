@@ -2,15 +2,20 @@
 @section('content')
 
     <div class="card shadow-sm">
-        <div class="card-body" id="timer" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false"
+        <div class="card-body bg-light" id="timer" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false"
              aria-controls="collapseExample">
-            <div class="d-flex align-items-center">
-                <strong>Mengarahkan...</strong>
-                <div class="spinner-border text-primary ml-auto" role="status" aria-hidden="true"></div>
+            <div class="row">
+                <div class="col text-primary font-weight-bold align-middle">Mengarahkan...</div>
+                <div class="col text-muted text-center align-middle">Ketuk untuk detail</div>
+                <div class="col"><div class="spinner-border text-primary ml-auto float-right" role="status" aria-hidden="true"></div></div>
             </div>
             <div class="collapse" id="collapseExample">
-                <div class="card card-body" style="margin-top: 2%;">
-                    {{ $url }}
+                <div class="card" style="margin-top: 2%;">
+                    <div class="card-body" style="padding: 10px 10px 10px">
+                        <div class="col">
+                            {{ $url }}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

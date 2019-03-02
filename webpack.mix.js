@@ -22,3 +22,4 @@ mix.js('resources/assets/js/app.js', 'public/js');
 mix.copy('node_modules/@fortawesome/fontawesome-free/js/fontawesome.min.js', 'public/js');
 mix.copy('node_modules/@fortawesome/fontawesome-free/js/brands.min.js', 'public/js');
 mix.copy('node_modules/@fortawesome/fontawesome-free/js/solid.min.js', 'public/js');
+mix.copyDirectory('node_modules/@fortawesome/fontawesome-free/webfonts', 'public/webfonts');
