@@ -37,7 +37,7 @@
                             <div class="input-group-prepend">
                                 <div class="input-group-text">https://s.klas.or.id/</div>
                             </div>
-                            <input type="text" class="validate" name="customurl" minlength="4"
+                            <input type="text" class="form-control" name="customurl" minlength="4"
                                    placeholder="cangkruk'an-2019 (contoh)">
                         </div>
                     </div>
