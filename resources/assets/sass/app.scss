@@ -12,10 +12,6 @@ main {
   margin-top: 4%;
 }
 
-.text-title {
-  margin-top: 2%;
-}
-
 .text-description {
   margin-bottom: 0;
 }
@@ -26,14 +22,14 @@ main {
     display: none !important;
   }
 
-  .text-title {
-    margin-top: 14%;
-  }
-
   .card-no-small {
     box-shadow: 0 0 !important;
     border: 0 !important;
     border-radius: 0 !important;
+  }
+
+  main {
+    margin-top: 90px;
   }
 }
 
@@ -43,14 +39,14 @@ main {
     display: none !important;
   }
 
-  .text-title {
-    margin-top: 14%;
-  }
-
   .card-no-small {
     box-shadow: 0 0 !important;
     border: 0 !important;
     border-radius: 0 !important;
+  }
+
+  main {
+    margin-top: 90px;
   }
 }
 
@@ -60,8 +56,8 @@ main {
     display: none !important;
   }
 
-  .text-title {
-    margin-top: 14%;
+  main {
+    margin-top: 90px;
   }
 }
 
