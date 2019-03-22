@@ -52,8 +52,8 @@
         <li><div class="user-view">
                 <div class="background teal"></div>
                 <img class="circle" src="{{ asset("img/logo-192x192.png") }}">
-                <span class="white-text name">{{ \Auth::user()->name }}</span>
-                <span class="white-text email">{{ \Auth::user()->email }}</span>
+                <span class="white-text name">{{ \Auth::user()['name'] }}</span>
+                <span class="white-text email">{{ \Auth::user()['email'] }}</span>
             </div></li>
         <li class="{{ (\Route::current()->getName() == 'admin.dashboard') ? 'active' : '' }}"><a
                     href="{{ route('admin.dashboard') }}" class="waves-effect"><i
