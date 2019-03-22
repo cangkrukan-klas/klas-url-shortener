@@ -36,7 +36,7 @@
   "Update": "Perbarui",
   "Insert": "Tambah",
   "Accessed": "Diakses",
-  "Go to": "Pergi",
+  "More info": "Info lebih lanjut",
   "Make your short link here for free": "Buat tautan pendek anda disini gratis",
   "Error!": "Kesalahan!",
   "Create Now": "Buat Sekarang",
@@ -51,5 +51,6 @@
   "GitHub Repository": "Repositori GitHub",
   "Short link created": "Tautan pendek dibuat",
   "Date": "Tanggal",
-  "Option": "Opsi"
+  "Option": "Opsi",
+  "Some info": "Beberapa informasi"
 }

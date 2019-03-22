@@ -1,100 +1,179 @@
 <!DOCTYPE html>
+<!--
+This is a starter template page. Use this page to start your new project from
+scratch. This page gets rid of all links and provides the needed markup only.
+-->
 <html lang="{{ app()->getLocale() }}">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
+    <title>URL Shortener by KLAS</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Icons -->
     <link rel="icon" href="{{ asset('img/logo-32x32.png') }}" sizes="32x32">
-    <title>URL Shortener by KLAS</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          crossorigin="anonymous">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+          integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <!-- Ionicons -->
+    <link href="https://unpkg.com/ionicons@3.0.0/dist/css/ionicons.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
 
-    <!-- Styles -->
-    <!-- Compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <link type="text/css" href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <style>
-        body {
-            display: flex;
-            min-height: 100vh;
-            flex-direction: column;
-        }
-        main {
-            flex: 1 0 auto;
-        }
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
 
-        header, main, footer {
-            padding-left: 300px;
-        }
-
-        @media only screen and (max-width : 992px) {
-            header, main, footer {
-                padding-left: 0;
-            }
-        }
-
-        table {
-            table-layout: fixed;
-            width: 1018px;
-        }
-    </style>
+    <!-- Google Font -->
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
-<body id="app">
-<header {{ \Request::is('admin/*') ? '' : 'hidden' }}>
-    <nav class="navbar-fixed teal z-depth-0">
-        <div class="nav-wrapper">
-            <a href="#" data-target='slide-out' class='sidenav-trigger show-on-small show-on-medium-and-up left'><i class="material-icons">menu</i></a>
-            <span class="white-text center"
-                  style="margin-top: 0; margin-bottom: 0; width: 100%;">{{ __('Admin Page') }}</span>
-            <span class="right"><a href="{{ url('logout') }}"
-                                   class="btn waves-effect waves-light red">{{ __('Logout') }}</a></span>
-        </div>
-    </nav>
+<body class="hold-transition skin-green sidebar-mini">
+<div class="wrapper">
 
-    <ul id="slide-out" class="sidenav sidenav-fixed">
-        <li><div class="user-view">
-                <div class="background teal"></div>
-                <img class="circle" src="{{ asset("img/logo-192x192.png") }}">
-                <span class="white-text name">{{ \Auth::user()['name'] }}</span>
-                <span class="white-text email">{{ \Auth::user()['email'] }}</span>
-            </div></li>
-        <li class="{{ (\Route::current()->getName() == 'admin.dashboard') ? 'active' : '' }}"><a
-                    href="{{ route('admin.dashboard') }}" class="waves-effect"><i
-                        class="material-icons">dashboard</i>{{ __('Dashboard') }}</a></li>
-        <li class="{{ \Route::current()->getName() == 'admin.shorturl' ? 'active' : '' }}"><a
-                    href="{{ route('admin.shorturl') }}" class="waves-effect"><i
-                        class="material-icons">table</i>{{ __('Short URLs') }}</a></li>
-        <li class="{{ \Route::current()->getName() == 'admin.customurl' ? 'active' : '' }}"><a
-                    href="{{ route('admin.customurl') }}" class="waves-effect"><i
-                        class="material-icons">table</i>{{ __('Custom URLs') }}</a></li>
-        <li class="{{ \Route::current()->getName() == 'admin.shorturl.insert.page' ? 'active' : '' }}"><a
-                    href="{{ route('admin.shorturl.insert.page') }}" class="waves-effect"><i
-                        class="material-icons">add</i>{{ __('Add Short URL') }}</a></li>
-        <li class="{{ \Route::current()->getName() == 'admin.customurl.insert.page' ? 'active' : '' }}"><a
-                    href="{{ route('admin.customurl.insert.page') }}" class="waves-effect"><i
-                        class="material-icons">add</i>{{ __('Add Custom URL') }}</a></li>
-        <li><div class="divider"></div></li>
-        <li><a class="subheader">{{ __('Setting') }}</a></li>
-        <li {{ session()->get('locale') == 'en' ? 'hidden' : '' }}><a class="waves-effect"
-                                                                      href="/en/?next=admin/dashboard">English</a></li>
-        <li {{ session()->get('locale') == 'id' ? 'hidden' : '' }}><a class="waves-effect"
-                                                                      href="/id/?next=admin/dashboard">Bahasa
-                Indonesia</a></li>
-        <li><a href="{{ url('logout') }}" class="waves-effect">{{ __('Logout') }}</a></li>
-    </ul>
-</header>
-<main style="{{ \Request::is('admin/*') ? "" : "padding-left: 0 !important" }}">
-    @yield('content')
-</main>
-<!-- Footer -->
-<footer></footer>
-<!-- Compiled and minified JavaScript -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-<script>
-    M.AutoInit();
-</script>
+    <!-- Main Header -->
+    <header class="main-header">
+
+        <!-- Logo -->
+        <a href="" class="logo">
+            <!-- mini logo for sidebar mini 50x50 pixels -->
+            <span class="logo-mini">KLAS</span>
+            <!-- logo for regular state and mobile devices -->
+            <span class="logo-lg">KLAS Admin</span>
+        </a>
+
+        <!-- Header Navbar -->
+        <nav class="navbar navbar-static-top" role="navigation">
+            <!-- Sidebar toggle button-->
+            <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+                <i class="fa fa-bars"></i>
+                <span class="sr-only">Toggle navigation</span>
+            </a>
+            <!-- Navbar Right Menu -->
+            <div class="navbar-custom-menu">
+                <ul class="nav navbar-nav">
+                    <!-- User Account Menu -->
+                    <li class="dropdown user user-menu">
+                        <!-- Menu Toggle Button -->
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <!-- The user image in the navbar-->
+                            <img src="{{ asset('img/logo-192x192.png') }}" class="user-image" alt="User Image">
+                            <!-- hidden-xs hides the username on small devices so only the image appears. -->
+                            <span class="hidden-xs">{{ \Auth::user()['name'] }}</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <!-- The user image in the menu -->
+                            <li class="user-header">
+                                <img src="{{ asset('img/logo-192x192.png') }}" class="img-circle" alt="User Image">
+
+                                <p>
+                                    {{ \Auth::user()['name'] }}
+                                    <small>{{ \Auth::user()['email'] }}</small>
+                                </p>
+                            </li>
+                            <!-- Menu Footer-->
+                            <li class="user-footer">
+                                <div class="pull-right">
+                                    <a href="#" class="btn btn-default btn-flat">{{ __('Logout') }}</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- Control Sidebar Toggle Button -->
+                    <li>
+                        <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <!-- Left side column. contains the logo and sidebar -->
+    <aside class="main-sidebar">
+
+        <!-- sidebar: style can be found in sidebar.less -->
+        <section class="sidebar">
+
+            <!-- Sidebar user panel (optional) -->
+            <div class="user-panel">
+                <div class="pull-left image">
+                    <img src="{{ asset('img/logo-192x192.png') }}" class="img-circle" alt="User Image">
+                </div>
+                <div class="pull-left info">
+                    <p>{{ \Auth::user()['name'] }}</p>
+                    <!-- Status -->
+                    <a href="#">{{ \Auth::user()['email'] }}</a>
+                </div>
+            </div>
+
+            <!-- Sidebar Menu -->
+            <ul class="sidebar-menu" data-widget="tree">
+                <li class="header">{{ __('Menu') }}</li>
+                <!-- Optionally, you can add icons to the links -->
+                <li class="{{ (\Route::current()->getName() == 'admin.dashboard') ? 'active' : '' }}">
+                    <a href="{{ route('admin.dashboard') }}"><i class="fa fa-tachometer-alt"></i>
+                        <span>{{ __('Dashboard') }}</span></a>
+                </li>
+                <li class="{{ \Route::current()->getName() == 'admin.shorturl' ? 'active' : '' }}">
+                    <a href="{{ route('admin.shorturl') }}"><i class="fa fa-table"></i>
+                        <span>{{ __('Short URLs') }}</span></a>
+                </li>
+                <li class="{{ \Route::current()->getName() == 'admin.customurl' ? 'active' : '' }}">
+                    <a href="{{ route('admin.customurl') }}"><i class="fa fa-table"></i>
+                        <span>{{ __('Custom URLs') }}</span></a>
+                </li>
+                <li class="header">{{ __('Setting') }}</li>
+                <li class="{{ session()->get('locale') == 'en' ? 'active' : '' }}"><a
+                            href="/en/?next=admin/dashboard"><i class="fa fa-language"></i> <span>English</span></a>
+                </li>
+                <li class="{{ session()->get('locale') == 'id' ? 'active' : '' }}"><a
+                            href="/id/?next=admin/dashboard"><i class="fa fa-language"></i>
+                        <span>Bahasa Indonesia</span></a></li>
+                <li><a href="{{ url('logout') }}"><i class="fa fa-sign-out-alt"></i> <span>{{ __('Logout') }}</span></a>
+                </li>
+            </ul>
+            <!-- /.sidebar-menu -->
+        </section>
+        <!-- /.sidebar -->
+    </aside>
+
+    <main>
+        @yield('content')
+    </main>
+
+    <!-- Main Footer -->
+    <footer class="main-footer">
+        <!-- To the right -->
+        <div class="pull-right hidden-xs">
+
+        </div>
+        <!-- Default to the left -->
+        <strong>Copyright &copy; 2018 <a href="https://klas.or.id">Kelompok Linux Arek Suroboyo</a>.</strong> All rights
+        reserved.
+    </footer>
+</div>
+<!-- ./wrapper -->
+
+<!-- REQUIRED JS SCRIPTS -->
+
+<!-- jQuery 3 -->
+<script src="https://code.jquery.com/jquery.min.js" crossorigin="anonymous"></script>
+<!-- Bootstrap 3.3.7 -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" crossorigin="anonymous"></script>
+<!-- AdminLTE App -->
+<script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+
+<!-- Optionally, you can add Slimscroll and FastClick plugins.
+     Both of these plugins are recommended to enhance the
+     user experience. -->
 @yield('jsscript')
 </body>
 </html>

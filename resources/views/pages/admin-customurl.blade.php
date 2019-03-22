@@ -1,13 +1,25 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="row">
-        <div class="card z-depth-0">
-            <div class="card-content">
-                <div class="card-title">{{ __('Custom URLs') }}</div>
-                <div class="divider"></div>
-                <div class="row">
-                    <table class="striped">
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                {{ __('Custom URLs') }}
+                <small></small>
+            </h1>
+            <ol class="breadcrumb">
+                <li class="active"><i class="fa fa-table"></i> {{ __('Custom URLs') }}</li>
+            </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content container-fluid">
+            <div class="box">
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table id="shorturl-table" class="table table-bordered table-striped">
                         <thead>
                         <tr>
                             <th style="width: 3%">{{ __('No') }}</th>
@@ -23,82 +35,100 @@
                             <tr>
                                 <td><p>{{ $item->no }}</p></td>
                                 {{--<td>{{ $item->id }}</td>--}}
-                                <td>
-                                    <div id="info-modal{{ $item->no }}" class="modal">
-                                        <div class="modal-content" style="word-wrap: break-word">
-                                            {{ $item->url }}
-                                        </div>
-                                        <div class="modal-footer">
-                                            <a class="modal-close waves-effect waves-green btn-flat">{{ __('Close') }}</a>
-                                        </div>
-                                    </div>
-                                    <a class="truncate modal-trigger" href="#info-modal{{ $item->no }}">{{ $item->url }}</a>
-                                </td>
+                                <td>{{ $item->url }}</td>
                                 <td><p>{{ $item->customurl }}</p></td>
                                 <td><p>{{ $item->created_at }}</p></td>
                                 <td>
-                                    <div id="edit-modal{{ $item->no }}" class="modal">
-                                        <div class="modal-content">
-                                            <form action="{{ route('admin.customurl.update') }}" method="POST">
-                                                @csrf
-                                                <input name="id" value="{{ $item->id }}" hidden>
-                                                <input name="created_at" value="{{ $item->created_at_full }}" hidden>
-                                                <div class="row">
-                                                    <div class="input-field">
-                                                        <select id="urlidform" name="url_id" required>
-                                                            @foreach($shorturls as $url)
-                                                                <option value="{{ $url->id }}" {{ $url->id == $item->url_id ? 'selected' : '' }} >{{ Crypt::decryptString($url->url) }}</option>
-                                                            @endforeach
-                                                        </select>
-                                                        <label for="urlidform">{{ __('URL ID') }}</label>
+                                    <div class="modal fade" id="edit-modal{{ $item->no }}">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <form action="{{ route('admin.customurl.update') }}" method="POST">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                                aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span></button>
+                                                        <h4 class="modal-title">{{ __('Are you sure?') }}</h4>
                                                     </div>
-                                                </div>
+                                                    <div class="modal-body">
+                                                        @csrf
+                                                        <input name="id" value="{{ $item->id }}" hidden>
+                                                        <input name="created_at" value="{{ $item->created_at_full }}"
+                                                               hidden>
+                                                        <div class="form-group">
+                                                            <label for="urlidform">{{ __('URL ID') }}</label>
+                                                            <select id="urlidform" name="url_id" class="form-control"
+                                                                    required>
+                                                                @foreach($shorturls as $url)
+                                                                    <option value="{{ $url->id }}" {{ $url->id == $item->url_id ? 'selected' : '' }} >{{ Crypt::decryptString($url->url) }}</option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
 
-                                                <div class="row" id="bg_result">
-                                                    <div class="input-field">
-                                                        <input id="customurlform" type="text" class="validate"
-                                                               name="customurl" minlength="4"
-                                                               value="{{ $item->customurl }}">
-                                                        <label for="customurlform">{{ __('Custom URL') }}</label>
+                                                        <div class="form-group">
+                                                            <label for="customurlform">{{ __('Custom URL') }}</label>
+                                                            <input type="text" class="form-control" id="customurlform"
+                                                                   name="customurl" minlength="4"
+                                                                   value="{{ $item->customurl }}" required>
+                                                        </div>
+
+                                                        <div class="form-group" hidden>
+                                                            {{ date_default_timezone_set("Asia/Jakarta") }}
+                                                            <label for="timeupdatedform">{{ __('Updated at') }}</label>
+                                                            <input type="text" class="form-control" id="timeupdatedform"
+                                                                   name="updated_at" value="{{ date("Y-m-d H:i:s") }}"
+                                                                   required>
+                                                        </div>
+
                                                     </div>
-                                                </div>
-
-                                                <div class="row" id="bg_result" hidden>
-                                                    {{ date_default_timezone_set("Asia/Jakarta") }}
-                                                    <div class="input-field">
-                                                        <input id="timeupdatedform" type="text" class="validate"
-                                                               name="updated_at" value="{{ date("Y-m-d H:i:s") }}">
-                                                        <label for="timeupdatedform">{{ __('Updated at') }}</label>
+                                                    <div class="modal-footer">
+                                                        <button type="submit" class="btn btn-primary">Submit</button>
                                                     </div>
-                                                </div>
-
-                                                <div class="row">
-                                                    <button class="btn waves-effect waves-light" type="submit"
-                                                            name="action">{{ __('Update') }}</button>
-                                                </div>
-                                            </form>
+                                                </form>
+                                            </div>
+                                            <!-- /.modal-content -->
                                         </div>
+                                        <!-- /.modal-dialog -->
                                     </div>
-                                    <a class="waves-effect waves-light btn blue modal-trigger"
-                                       href="#edit-modal{{ $item->no }}"><i class="material-icons">edit</i></a>
+                                    <!-- /.modal edit-->
 
-                                    <div id="delete-modal{{ $item->no }}" class="modal">
-                                        <div class="modal-content">
-                                            <h4>{{ __('Are you sure?') }}</h4>
-                                            <p>{{ __('This data cannot be returned after being deleted.') }}</p>
+                                    <button type="button" class="btn btn-default bg-blue" data-toggle="modal"
+                                            data-target="#edit-modal{{ $item->no }}">
+                                        <span class="fa fa-pencil-alt"></span>
+                                    </button>
+
+                                    <div class="modal fade" id="delete-modal{{ $item->no }}">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span></button>
+                                                    <h4 class="modal-title">{{ __('Are you sure?') }}</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>{{ __('This data cannot be returned after being deleted.') }}</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-default pull-left"
+                                                            data-dismiss="modal">{{ __('No, cancel') }}</button>
+                                                    <form class="right"
+                                                          action="{{ route('admin.customurl.delete', ['id' =>$item->id]) }}"
+                                                          method="GET">
+                                                        <button type="submit"
+                                                                class="btn btn-primary">{{ __('Sure, I understand') }}</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                            <!-- /.modal-content -->
                                         </div>
-                                        <div class="modal-footer">
-                                            <form class="right"
-                                                  action="{{ route('admin.customurl.delete', ['id' =>$item->id]) }}"
-                                                  method="GET">
-                                                <button class="modal-close waves-effect waves-green btn-flat"
-                                                        type="submit">{{ __('Sure, I understand') }}</button>
-                                            </form>
-                                            <a href="{{ route('admin.customurl') }}"
-                                               class="modal-close waves-effect waves-green btn-flat">{{ __('No, cancel') }}</a>
-                                        </div>
+                                        <!-- /.modal-dialog -->
                                     </div>
-                                    <a class="waves-effect waves-light btn red modal-trigger" href="#delete-modal{{ $item->no }}"><i class="material-icons">delete</i></a>
+                                    <!-- /.modal delete -->
+
+                                    <button type="button" class="btn btn-default bg-red" data-toggle="modal"
+                                            data-target="#delete-modal{{ $item->no }}">
+                                        <span class="fa fa-trash"></span>
+                                    </button>
                                 </td>
                             </tr>
                         @endforeach
@@ -106,6 +136,16 @@
                     </table>
                 </div>
             </div>
-        </div>
+        </section>
+        <!-- /.content -->
     </div>
+    <!-- /.content-wrapper -->
+@endsection
+
+@section('jsscript')
+    <script>
+        $(document).ready(function () {
+            $('#shorturl-table').DataTable();
+        });
+    </script>
 @endsection

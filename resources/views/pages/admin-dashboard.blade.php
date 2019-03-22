@@ -1,50 +1,72 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="row">
-        <div class="card z-depth-0">
-            <div class="card-content">
-                <div class="card-title">{{ __("Dashboard") }}</div>
-                <div class="divider"></div>
-                <div class="row">
-                    <div class="col s12 m6 l4">
-                        <div class="card">
-                            <div class="card-content">
-                                <div class="card-title">
-                                    <span class="badge">{{ \App\DataStatistik::query()->where('nama', 'shortlinkgenerate')->first()->nilai }}</span>
-                                    {{ __("Short URLs") }}
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                {{ __("Dashboard") }}
+                <small>{{ __('Some info') }}</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li class="active"><i class="fa fa-tachometer-alt"></i> {{ __('Dashboard') }}</li>
+            </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content container-fluid">
+            <div class="box">
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-lg-3 col-xs-6">
+                            <!-- small box -->
+                            <div class="small-box bg-aqua">
+                                <div class="inner">
+                                    <h3>{{ \App\DataStatistik::query()->where('nama', 'shortlinkgenerate')->first()->nilai }}</h3>
+
+                                    <p>{{ __("Short URLs") }}</p>
                                 </div>
-                                <div class="card-action">
-                                    <a href="{{ route('admin.shorturl') }}">{{ __("Go to") }}</a>
+                                <div class="icon">
+                                    <i class="ion ion-link"></i>
                                 </div>
+                                <a href="{{ route('admin.shorturl') }}" class="small-box-footer">{{ __('More info') }}
+                                    <i class="fa fa-arrow-circle-right"></i></a>
                             </div>
                         </div>
-                    </div>
-                    <div class="col s12 m6 l4">
-                        <div class="card">
-                            <div class="card-content">
-                                <div class="card-title">
-                                    <span class="badge">{{ \App\DataStatistik::query()->where('nama', 'shortlinkcustom')->first()->nilai }}</span>
-                                    {{ __("Custom URLs") }}
+                        <div class="col-lg-3 col-xs-6">
+                            <!-- small box -->
+                            <div class="small-box bg-green-gradient">
+                                <div class="inner">
+                                    <h3>{{ \App\DataStatistik::query()->where('nama', 'shortlinkcustom')->first()->nilai }}</h3>
+
+                                    <p>{{ __("Custom URLs") }}</p>
                                 </div>
-                                <div class="card-action">
-                                    <a href="{{ route('admin.customurl') }}">{{ __("Go to") }}</a>
+                                <div class="icon">
+                                    <i class="ion ion-link"></i>
                                 </div>
+                                <a href="{{ route('admin.customurl') }}" class="small-box-footer">{{ __('More info') }}
+                                    <i class="fa fa-arrow-circle-right"></i></a>
                             </div>
                         </div>
-                    </div>
-                    <div class="col s12 m6 l4">
-                        <div class="card">
-                            <div class="card-content">
-                                <div class="card-title">
-                                    <span class="badge">{{ \App\DataStatistik::query()->where('nama', 'shortlinkakses')->first()->nilai }}</span>
-                                    {{ __("Accessed") }}
+                        <div class="col-lg-3 col-xs-6">
+                            <!-- small box -->
+                            <div class="small-box bg-navy">
+                                <div class="inner">
+                                    <h3>{{ \App\DataStatistik::query()->where('nama', 'shortlinkakses')->first()->nilai }}</h3>
+
+                                    <p>{{ __("Accessed") }}</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-link"></i>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
+        <!-- /.content -->
     </div>
+    <!-- /.content-wrapper -->
 @endsection
