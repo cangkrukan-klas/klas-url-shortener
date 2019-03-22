@@ -10,22 +10,32 @@
                     <table class="striped">
                         <thead>
                         <tr>
-                            <th>{{ __('No') }}</th>
+                            <th style="width: 3%">{{ __('No') }}</th>
                             {{--<th>ID</th>--}}
-                            <th>{{ __('URL') }}</th>
-                            <th>{{ __('Custom URL') }}</th>
-                            <th>{{ __('Date') }}</th>
-                            <th>{{ __('Option') }}</th>
+                            <th style="width: 40%">{{ __('URL') }}</th>
+                            <th style="width: 20%">{{ __('Custom URL') }}</th>
+                            <th style="width: 20%">{{ __('Date') }}</th>
+                            <th style="width: 10%">{{ __('Option') }}</th>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach($data as $item)
                             <tr>
-                                <td>{{ $item->no }}</td>
+                                <td><p>{{ $item->no }}</p></td>
                                 {{--<td>{{ $item->id }}</td>--}}
-                                <td>{{ $item->url }}</td>
-                                <td>{{ $item->customurl }}</td>
-                                <td>{{ $item->created_at }}</td>
+                                <td>
+                                    <div id="info-modal{{ $item->no }}" class="modal">
+                                        <div class="modal-content" style="word-wrap: break-word">
+                                            {{ $item->url }}
+                                        </div>
+                                        <div class="modal-footer">
+                                            <a class="modal-close waves-effect waves-green btn-flat">{{ __('Close') }}</a>
+                                        </div>
+                                    </div>
+                                    <a class="truncate modal-trigger" href="#info-modal{{ $item->no }}">{{ $item->url }}</a>
+                                </td>
+                                <td><p>{{ $item->customurl }}</p></td>
+                                <td><p>{{ $item->created_at }}</p></td>
                                 <td>
                                     <div id="edit-modal{{ $item->no }}" class="modal">
                                         <div class="modal-content">

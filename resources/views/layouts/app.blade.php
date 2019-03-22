@@ -34,6 +34,11 @@
                 padding-left: 0;
             }
         }
+
+        table {
+            table-layout: fixed;
+            width: 1018px;
+        }
     </style>
 </head>
 <body id="app">
@@ -89,9 +94,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 <script>
     M.AutoInit();
-    $(document).ready(function () {
-        $('.sidenav').sidenav();
-    });
 </script>
 @yield('jsscript')
 </body>

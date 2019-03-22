@@ -23,7 +23,16 @@
                         <tr>
                             <td>{{ $item->no }}</td>
                             {{--<td>{{ $item->id }}</td>--}}
-                            <td>{{ $item->url }}</td>
+                            <td><div id="info-modal{{ $item->no }}" class="modal">
+                                    <div class="modal-content" style="word-wrap: break-word">
+                                        {{ $item->url }}
+                                    </div>
+                                    <div class="modal-footer">
+                                        <a class="modal-close waves-effect waves-green btn-flat">{{ __('Close') }}</a>
+                                    </div>
+                                </div>
+                                <a class="truncate modal-trigger" href="#info-modal{{ $item->no }}">{{ $item->url }}</a>
+                            </td>
                             <td>{{ $item->shorturl }}</td>
                             <td>{{ $item->created_at }}</td>
                             <td>
