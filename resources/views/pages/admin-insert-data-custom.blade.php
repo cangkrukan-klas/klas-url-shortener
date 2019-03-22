@@ -4,7 +4,7 @@
     <div class="row">
         <div class="card z-depth-0">
             <div class="card-content">
-                <div class="card-title">Tambah data manual</div>
+                <div class="card-title">{{ __('Add Custom URL') }}</div>
                 <div class="divider"></div>
                 <div class="row">
                     <form action="{{ route('admin.customurl.insert') }}" method="POST">
@@ -31,7 +31,8 @@
                         </div>
 
                         <div class="row">
-                            <button class="btn waves-effect waves-light" type="submit" name="action">Input</button>
+                            <button class="btn waves-effect waves-light" type="submit"
+                                    name="action">{{ __('Insert') }}</button>
                         </div>
                     </form>
                 </div>

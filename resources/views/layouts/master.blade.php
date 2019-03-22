@@ -30,15 +30,21 @@
                 <li class="nav-item">
                     <a class="nav-link" href="https://github.com/cangkrukan-klas/klas-url-shortener">
                         <i class="fab fa-github"></i>
-                        GitHub Repository
+                        {{ __('GitHub Repository') }}
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="https://klas.or.id">Tentang kami</a>
+                    <a class="nav-link" href="https://klas.or.id">{{ __('About Us') }}</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link disabled" href="#">Tautan pendek dibuat
+                    <a class="nav-link disabled" href="#">{{ __('Short link created') }}
                         : {{ (\App\DataStatistik::query()->where('nama', 'shortlinkgenerate')->first()->nilai) + (\App\DataStatistik::query()->where('nama', 'shortlinkcustom')->first()->nilai) }}</a>
+                </li>
+                <li class="nav-item">
+                    <a {{ session()->get('locale') == 'en' ? 'hidden' : '' }} class="waves-effect"
+                       href="/en/">English</a>
+                    <a {{ session()->get('locale') == 'id' ? 'hidden' : '' }} class="waves-effect" href="/id/">Bahasa
+                        Indonesia</a>
                 </li>
             </ul>
         </div>
@@ -53,10 +59,10 @@
                                                                                height="100px"></a></div>
         </div>
         <div class="row">
-            <div class="col-12 text-center text-title"><h2>PEMENDEK TAUTAN SEDERHANA DAN CEPAT</h2></div>
+            <div class="col-12 text-center text-title"><h2>{{ __('SIMPLE AND FAST URL SHORTENER') }}</h2></div>
         </div>
         <div class="row">
-            <div class="col-12 text-center text-description"><p>oleh Kelompok Linux Arek Suroboyo</p></div>
+            <div class="col-12 text-center text-description"><p>{{ __('by Kelompok Linux Arek Suroboyo') }}</p></div>
         </div>
         <div class="row">
             <div class="col-sm-12 col-md-12 col-lg-8 offset-sm-0 offset-md-0 offset-lg-2 text-left">
@@ -70,12 +76,15 @@
 <!-- Footer -->
 <footer class="fixed-bottom card-footer hide-on-med-down">
     <div class="row text-center">
-        <div class="col-sm-4 col-md-4 col-lg-4">2018</div>
-        <div class="col-sm-4 col-md-4 col-lg-4">Tautan pendek dibuat
-            : {{ (\App\DataStatistik::query()->where('nama', 'shortlinkgenerate')->first()->nilai) + (\App\DataStatistik::query()->where('nama', 'shortlinkcustom')->first()->nilai) }}</div>
-        <div class="col-sm-4 col-md-4 col-lg-4"><span class="text-muted"><a
+        <div class="col">2018</div>
+        <div class="col"><span class="text-muted"><a
                         href="https://github.com/cangkrukan-klas/klas-url-shortener"><i class="fab fa-github fa-2x" style="color: black"></i></a></span>
         </div>
+        <div class="col">{{ __('Short link created') }}
+            : {{ (\App\DataStatistik::query()->where('nama', 'shortlinkgenerate')->first()->nilai) + (\App\DataStatistik::query()->where('nama', 'shortlinkcustom')->first()->nilai) }}</div>
+        <div class="col"><a {{ session()->get('locale') == 'en' ? 'hidden' : '' }} class="waves-effect" href="/en/">English</a>
+            <a {{ session()->get('locale') == 'id' ? 'hidden' : '' }} class="waves-effect" href="/id/">Bahasa
+                Indonesia</a></div>
     </div>
 </footer>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

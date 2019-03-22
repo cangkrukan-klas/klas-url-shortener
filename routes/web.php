@@ -21,6 +21,7 @@ Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('login', 'Auth\LoginController@login')->name('login');
 
 Route::get('logout', 'Auth\LoginController@logout');
+Route::Auth();
 
 Route::prefix('/admin')->name('admin.')->group(function () {
     Route::get('/dashboard', 'AdminController@index')->name('dashboard');
@@ -34,6 +35,12 @@ Route::prefix('/admin')->name('admin.')->group(function () {
 
     Route::post('/insert-data', 'AdminController@insert_shorturl')->name('shorturl.insert');
     Route::post('/insert-data-custom', 'AdminController@insert_customurl')->name('customurl.insert');
+    Route::post('/update-data-custom', 'AdminController@update_customurl')->name('customurl.update');
 });
+
+//Route::get('/en/{next}', 'LocalizationController@set_en');
+Route::get('/en', 'LocalizationController@set_en');
+//Route::get('/id/{next}', 'LocalizationController@set_id');
+Route::get('/id', 'LocalizationController@set_id');
 
 Route::get('/{shorturl}', 'URLShortenerController@go');

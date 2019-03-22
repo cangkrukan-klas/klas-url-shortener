@@ -4,7 +4,7 @@
         <div class="card-body bg-light">
             <div class="row text-center" style="padding-bottom: 15px">
                 <div class="col">
-                    <span class="text-title align-middle" style="font-size: 1.4rem">Tautan Pendek Anda</span>
+                    <span class="text-title align-middle" style="font-size: 1.4rem">{{ __('Your Short URL') }}</span>
                 </div>
             </div>
             <div class=" row form-group">

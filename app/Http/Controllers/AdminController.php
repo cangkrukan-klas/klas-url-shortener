@@ -65,12 +65,15 @@ class AdminController extends Controller
                 $obj->no = $i++;
                 $obj->id = $cus_item->id;
                 $obj->url = Crypt::decryptString($item->url);
+                $obj->url_id = $cus_item->url_id;
                 $obj->customurl = Crypt::decryptString($cus_item->customurl);
                 $obj->created_at = date("j F Y", strtotime($cus_item->created_at));
+                $obj->created_at_full = $cus_item->created_at;
                 array_push($data, $obj);
             }
         }
-        return view('pages/admin-customurl', ['data' => $data]);
+        $urls = ShortUrl::all();
+        return view('pages/admin-customurl', ['data' => $data, 'shorturls' => $urls]);
     }
 
     public function insert_shorturl_page() {
@@ -199,5 +202,32 @@ class AdminController extends Controller
         }
         $new_custom_url->save();
         return redirect(route('admin.customurl.insert'))->with("success", "Tautan kustom telah ditambahkan!");
+    }
+
+    public function update_customurl(Request $request)
+    {
+        $id = $request->get('id');
+        $url_id = $request->get('url_id');
+        $customurl = $request->get('customurl');
+        $created_at = $request->get('created_at');
+        $updated_at = $request->get('updated_at');
+        $parse = parse_url($customurl);
+
+        if (isset($parse['scheme'])) {
+            $customurl = str_replace(array($parse['scheme'], "://", $parse['host']), "", $customurl);
+        }
+        $customurl = preg_replace("/[^a-zA-Z0-9 \. \-]/", "", $customurl);
+        if ($customurl == "home" || $customurl == "login" || $customurl == "register") {
+            return redirect(route('admin.shorturl_insert'));
+        }
+
+        $cusurl = CustomUrl::find($id);
+        $cusurl->url_id = $url_id;
+        $cusurl->customurl = Crypt::encryptString($customurl);
+        $cusurl->created_at = $created_at;
+        $cusurl->updated_at = $updated_at;
+        $cusurl->save();
+
+        return redirect(route('admin.customurl'))->with("success", "Tautan kustom telah disunting!");
     }
 }

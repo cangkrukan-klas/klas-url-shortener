@@ -10,31 +10,37 @@
                     <table class="striped">
                         <thead>
                         <tr>
-                            <th>No</th>
-                            <th>ID</th>
-                            <th>URL</th>
-                            <th>Tautan Pendek</th>
-                            <th>Tanggal</th>
-                            <th>Opsi</th>
+                            <th>{{ __('No') }}</th>
+                            {{--<th>ID</th>--}}
+                            <th>{{ __('URL') }}</th>
+                            <th>{{ __('Short URL') }}</th>
+                            <th>{{ __('Date') }}</th>
+                            <th>{{ __('Option') }}</th>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach($data as $item)
                         <tr>
                             <td>{{ $item->no }}</td>
-                            <td>{{ $item->id }}</td>
+                            {{--<td>{{ $item->id }}</td>--}}
                             <td>{{ $item->url }}</td>
                             <td>{{ $item->shorturl }}</td>
                             <td>{{ $item->created_at }}</td>
                             <td>
                                 <div id="delete-modal{{ $item->no }}" class="modal">
                                     <div class="modal-content">
-                                        <h4>Apakah Anda yakin?</h4>
-                                        <p>Data tersebut tidak dapat dikembalikan setelah dihapus. Dengan menghapus data tautan pendek, Anda juga akan <strong>menghapus tautan kustom yang memiliki tautan yang sama</strong>.</p>
+                                        <h4>{{ __('Are you sure?') }}</h4>
+                                        <p>{{ __('This data cannot be returned after being deleted. By deleting short link data, you will also <strong> delete custom links that have the same link </strong>.') }}</p>
                                     </div>
                                     <div class="modal-footer">
-                                        <form class="right" action="{{ route('admin.shorturl.delete', ['id' =>$item->id]) }}" method="GET"><button class="modal-close waves-effect waves-green btn-flat" type="submit">Yakin, Saya mengerti</button></form>
-                                        <a href="{{ route('admin.shorturl') }}" class="modal-close waves-effect waves-green btn-flat">Tidak, Batalkan</a>
+                                        <form class="right"
+                                              action="{{ route('admin.shorturl.delete', ['id' =>$item->id]) }}"
+                                              method="GET">
+                                            <button class="modal-close waves-effect waves-green btn-flat"
+                                                    type="submit">{{ __('Sure, I understand') }}</button>
+                                        </form>
+                                        <a href="{{ route('admin.shorturl') }}"
+                                           class="modal-close waves-effect waves-green btn-flat">{{ __('No, cancel') }}</a>
                                     </div>
                                 </div>
                                 <a class="waves-effect waves-light btn red modal-trigger" href="#delete-modal{{ $item->no }}"><i class="material-icons">delete</i></a>

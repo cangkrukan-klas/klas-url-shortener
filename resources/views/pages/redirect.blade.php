@@ -5,8 +5,8 @@
         <div class="card-body bg-light" id="timer" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false"
              aria-controls="collapseExample">
             <div class="row">
-                <div class="col text-primary font-weight-bold align-middle">Mengarahkan...</div>
-                <div class="col text-muted text-center align-middle">Ketuk untuk detail</div>
+                <div class="col text-primary font-weight-bold align-middle">{{ __('Redirecting...') }}</div>
+                <div class="col text-muted text-center align-middle hide-on-med-down">{{ __('Tap for details') }}</div>
                 <div class="col"><div class="spinner-border text-primary ml-auto float-right" role="status" aria-hidden="true"></div></div>
             </div>
             <div class="collapse" id="collapseExample">
@@ -35,7 +35,7 @@
             if (countDown <= 1) {
                 document.getElementById("timer").innerHTML = "" +
                     "<div class=\"d-flex align-items-center\">\n" +
-                    "<strong>Membuka halaman...</strong>\n" +
+                    "<strong>{{ __('Opening page...') }}</strong>\n" +
                     "<div class=\"spinner-border text-success ml-auto\" role=\"status\" aria-hidden=\"true\"></div></div>" +
                     "<div class=\"collapse\" id=\"collapseExample\">\n" +
                     "<div class=\"card card-body\" style=\"margin-top: 2%;\">{{ $url }}</div></div>";
