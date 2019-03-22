@@ -82,7 +82,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             <!-- Menu Footer-->
                             <li class="user-footer">
                                 <div class="pull-right">
-                                    <a href="#" class="btn btn-default btn-flat">{{ __('Logout') }}</a>
+                                    <a href="{{ url('logout') }}"
+                                       class="btn btn-default btn-flat">{{ __('Logout') }}</a>
                                 </div>
                             </li>
                         </ul>

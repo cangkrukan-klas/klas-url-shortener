@@ -41,9 +41,9 @@
                         : {{ (\App\DataStatistik::query()->where('nama', 'shortlinkgenerate')->first()->nilai) + (\App\DataStatistik::query()->where('nama', 'shortlinkcustom')->first()->nilai) }}</a>
                 </li>
                 <li class="nav-item">
-                    <a {{ session()->get('locale') == 'en' ? 'hidden' : '' }} class="waves-effect"
+                    <a class="nav-link" {{ session()->get('locale') == 'en' ? 'hidden' : '' }}
                        href="/en/">English</a>
-                    <a {{ session()->get('locale') == 'id' ? 'hidden' : '' }} class="waves-effect" href="/id/">Bahasa
+                    <a class="nav-link" {{ session()->get('locale') == 'id' ? 'hidden' : '' }} href="/id/">Bahasa
                         Indonesia</a>
                 </li>
             </ul>
