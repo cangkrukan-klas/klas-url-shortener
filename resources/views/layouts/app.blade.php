@@ -131,10 +131,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <span>{{ __('Custom URLs') }}</span></a>
                 </li>
                 <li class="header">{{ __('Setting') }}</li>
-                <li class="{{ session()->get('locale') == 'en' ? 'active' : '' }}"><a
+                <li class="{{ session()->get('locale') == 'en' || config('app.locale') == 'en' ? 'active' : '' }}"><a
                             href="/en/?next=admin/dashboard"><i class="fa fa-language"></i> <span>English</span></a>
                 </li>
-                <li class="{{ session()->get('locale') == 'id' ? 'active' : '' }}"><a
+                <li class="{{ session()->get('locale') == 'id' || config('app.locale') == 'id' ? 'active' : '' }}"><a
                             href="/id/?next=admin/dashboard"><i class="fa fa-language"></i>
                         <span>Bahasa Indonesia</span></a></li>
                 <li><a href="{{ url('logout') }}"><i class="fa fa-sign-out-alt"></i> <span>{{ __('Logout') }}</span></a>

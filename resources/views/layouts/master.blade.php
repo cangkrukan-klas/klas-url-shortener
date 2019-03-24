@@ -41,9 +41,9 @@
                         : {{ (\App\DataStatistik::query()->where('nama', 'shortlinkgenerate')->first()->nilai) + (\App\DataStatistik::query()->where('nama', 'shortlinkcustom')->first()->nilai) }}</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" {{ session()->get('locale') == 'en' ? 'hidden' : '' }}
+                    <a class="nav-link" {{ session()->get('locale') == 'en' || config('app.locale') == 'en' ? 'hidden' : '' }}
                        href="/en/">English</a>
-                    <a class="nav-link" {{ session()->get('locale') == 'id' ? 'hidden' : '' }} href="/id/">Bahasa
+                    <a class="nav-link" {{ session()->get('locale') == 'id' || config('app.locale') == 'id' ? 'hidden' : '' }} href="/id/">Bahasa
                         Indonesia</a>
                 </li>
             </ul>
@@ -83,8 +83,7 @@
         <div class="col">{{ __('Short link created') }}
             : {{ (\App\DataStatistik::query()->where('nama', 'shortlinkgenerate')->first()->nilai) + (\App\DataStatistik::query()->where('nama', 'shortlinkcustom')->first()->nilai) }}</div>
         <div class="col">
-            <a class="{{ session()->get('locale') == 'en' ? 'text-muted' : '' }}" href="/en/">en</a> | <a
-                    class="{{ session()->get('locale') == 'id' ? 'text-muted' : '' }}" href="/id/">id</a></div>
+            <a href="/en/" {{ session()->get('locale') == 'en' || config('app.locale') == 'en' ? 'hidden' : '' }}>en</a><a href="/id/" {{ session()->get('locale') == 'id' || config('app.locale') == 'id' ? 'hidden' : '' }}>id</a></div>
     </div>
 </footer>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

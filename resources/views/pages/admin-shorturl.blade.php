@@ -18,7 +18,7 @@
         <section class="content container-fluid">
             <div class="box">
                 <!-- /.box-header -->
-                <div class="box-body">
+                <div class="box-body table-responsive">
                     <table id="shorturl-table" class="table table-bordered table-striped">
                         <thead>
                         <tr>
