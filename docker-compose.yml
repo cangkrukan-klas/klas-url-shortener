@@ -1,0 +1,46 @@
+version: '3'
+services:
+  web:
+    build:
+      context: ./
+      dockerfile: web.dockerfile
+    container_name: web
+    volumes:
+      - ./:/var/www
+    restart: always
+    ports:
+      - "8080:80"
+    links:
+      - app
+
+  app:
+    build:
+      context: ./
+      dockerfile: app.dockerfile
+    container_name: app
+    volumes:
+      - ./:/var/www
+    restart: always
+    links:
+      - database
+    environment:
+      - "DB_PORT=3306"
+      - "DB_HOST=database"
+
+  database:
+    image: mysql:latest
+    hostname: database
+    restart: always
+    container_name: db
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: shortlink
+    ports:
+      - "33061:3306"
+
+  cache:
+    image: redis:latest
+    container_name: cache
+    ports:
+      - "63791:6379"
