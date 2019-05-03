@@ -12,7 +12,7 @@
     "devDependencies": {
         "axios": "^0.18",
         "cross-env": "^5.1",
-        "laravel-mix": "^4.0.13",
+        "laravel-mix": "^4.0.15",
         "lodash": "^4.17.11",
         "resolve-url-loader": "^2.3.1",
         "sass": "^1.16.0",
@@ -23,7 +23,7 @@
         "ajv": "^6.6.2",
         "bootstrap-sass": "^3.4.0",
         "imagemin": "^5.3.1",
-        "jquery": "^3.3.1",
+        "jquery": "^3.4.1",
         "popper.js": "^1.14.7"
     }
 }
