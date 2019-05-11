@@ -1,16 +1,12 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use App\CustomUrl;
 use App\DataStatistik;
 use App\ShortUrl;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
-
 class URLShortenerController extends Controller
 {
-
     public function doShort(Request $request)
     {
         // Melakukan pemendekan link
@@ -84,16 +80,13 @@ class URLShortenerController extends Controller
                 'nilai' => $stat->nilai + 1
             ]);
         }
-
         $resp = [
             'url' => $url,
             'shorturl' => $result_short_url,
             'customurl' => $result_custom_url
         ];
-
         return view('pages/result', ['result' => $resp]);
     }
-
     protected function randomString($length = 3)
     {
         $str = "";
@@ -105,7 +98,6 @@ class URLShortenerController extends Controller
         }
         return $str;
     }
-
     public function go($shorturl)
     {
         $url = "";
