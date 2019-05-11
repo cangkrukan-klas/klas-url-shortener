@@ -96,33 +96,33 @@
 @endsection
 
 @section('jsscript')
-    <script>
-        // Set the date we're counting down to
-        let countDown = 9;
-        let data = ["z-depth-5", "z-depth-4", "z-depth-3", "z-depth-2", "z-depth-1", "z-depth-0"];
-        let i = 0;
-        // Update the count down every 1 second
-        let x = setInterval(function () {
-            countDown--;
-            // Output the result in an element with id="demo"
-            if (countDown<5) {
-                if ( document.getElementById("inibro").classList.contains(data[i]) ) {
-                    document.getElementById("inibro").classList.replace(data[i], data[i-1]);
-                }
-                i--;
-            } else {
-                if ( document.getElementById("inibro").classList.contains(data[i]) ) {
-                    document.getElementById("inibro").classList.replace(data[i], data[i+1]);
-                }
-                i++;
+<script>
+    // Set the date we're counting down to
+    let countDown = 9;
+    let data = ["z-depth-5", "z-depth-4", "z-depth-3", "z-depth-2", "z-depth-1", "z-depth-0"];
+    let i = 0;
+    // Update the count down every 1 second
+    let x = setInterval(function () {
+        countDown--;
+        // Output the result in an element with id="demo"
+        if (countDown<5) {
+            if ( document.getElementById("inibro").classList.contains(data[i]) ) {
+                document.getElementById("inibro").classList.replace(data[i], data[i-1]);
             }
-            // If the count down is over, write some text
-            if (countDown <= 0) {
-                clearInterval(x);
-                if ( document.getElementById("inibro").classList.contains(data[i]) ) {
-                    document.getElementById("inibro").classList.replace(data[i], "z-depth-5");
-                }
+            i--;
+        } else {
+            if ( document.getElementById("inibro").classList.contains(data[i]) ) {
+                document.getElementById("inibro").classList.replace(data[i], data[i+1]);
             }
-        }, 100);
-    </script>
+            i++;
+        }
+        // If the count down is over, write some text
+        if (countDown <= 0) {
+            clearInterval(x);
+            if ( document.getElementById("inibro").classList.contains(data[i]) ) {
+                document.getElementById("inibro").classList.replace(data[i], "z-depth-5");
+            }
+        }
+    }, 100);
+</script>
 @endsection

@@ -1,10 +1,13 @@
 <?php
+
 namespace App\Http\Controllers;
+
 use App\CustomUrl;
 use App\ShortUrl;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
+
 class AdminController extends Controller
 {
     /**
@@ -16,6 +19,7 @@ class AdminController extends Controller
     {
         $this->middleware('auth');
     }
+
     /**
      * Show the application dashboard.
      *
@@ -25,6 +29,7 @@ class AdminController extends Controller
     {
         return view('pages/admin-dashboard');
     }
+
     public function shorturl()
     {
         $data = [];
@@ -42,8 +47,10 @@ class AdminController extends Controller
             $obj->created_at = date("j F Y", strtotime($item->created_at));
             array_push($data, $obj);
         }
+
         return view('pages/admin-shorturl', ['data' => $data]);
     }
+
     public function customurl()
     {
         $data = array();
@@ -68,9 +75,11 @@ class AdminController extends Controller
         $urls = ShortUrl::all();
         return view('pages/admin-customurl', ['data' => $data, 'shorturls' => $urls]);
     }
+
     public function insert_shorturl_page() {
         return view('pages/admin-insert-data');
     }
+
     public function delete_shorturl($id)
     {
         if (Auth::check()) {
@@ -82,6 +91,7 @@ class AdminController extends Controller
         }
         return redirect(route('admin.shorturl'));
     }
+
     public function delete_customurl($id)
     {
         if (Auth::check()) {
@@ -93,10 +103,12 @@ class AdminController extends Controller
         }
         return redirect(route('admin.customurl'));
     }
+
     public function insert_shorturl(Request $request)
     {
         $is_new_short_url = 1;
         $is_new_custom_url = 1;
+
         // Get the data
         $url = $request->get('url');
         $shorturl = $request->get('shorturl');
@@ -106,6 +118,7 @@ class AdminController extends Controller
         }
         $created_at = $request->get('created_at');
         $parse = parse_url($customurl);
+
         if (isset($parse['scheme'])) {
             $customurl = str_replace(array($parse['scheme'], "://", $parse['host']), "", $customurl);
         }
@@ -158,16 +171,20 @@ class AdminController extends Controller
             }
             $new_custom_url->save();
         }
+
         return redirect(route('admin.shorturl.insert'))->with("success", "Tautan pendek telah ditambahkan!");
     }
+
     public function insert_customurl_page() {
         return view('pages/admin-insert-data-custom');
     }
+
     public function insert_customurl(Request $request) {
         $url_id = $request->get('url_id');
         $customurl = $request->get('customurl');
         $created_at = $request->get('created_at');
         $parse = parse_url($customurl);
+
         if (isset($parse['scheme'])) {
             $customurl = str_replace(array($parse['scheme'], "://", $parse['host']), "", $customurl);
         }
@@ -175,6 +192,7 @@ class AdminController extends Controller
         if ($customurl == "home" || $customurl == "login" || $customurl == "register") {
             return redirect(route('admin.shorturl_insert'));
         }
+
         $new_custom_url = new CustomUrl;
         $new_custom_url->url_id = $url_id;
         $new_custom_url->customurl = Crypt::encryptString($customurl);
@@ -185,6 +203,7 @@ class AdminController extends Controller
         $new_custom_url->save();
         return redirect(route('admin.customurl.insert'))->with("success", "Tautan kustom telah ditambahkan!");
     }
+
     public function update_customurl(Request $request)
     {
         $id = $request->get('id');
@@ -193,6 +212,7 @@ class AdminController extends Controller
         $created_at = $request->get('created_at');
         $updated_at = $request->get('updated_at');
         $parse = parse_url($customurl);
+
         if (isset($parse['scheme'])) {
             $customurl = str_replace(array($parse['scheme'], "://", $parse['host']), "", $customurl);
         }
@@ -200,12 +220,14 @@ class AdminController extends Controller
         if ($customurl == "home" || $customurl == "login" || $customurl == "register") {
             return redirect(route('admin.shorturl_insert'));
         }
+
         $cusurl = CustomUrl::find($id);
         $cusurl->url_id = $url_id;
         $cusurl->customurl = Crypt::encryptString($customurl);
         $cusurl->created_at = $created_at;
         $cusurl->updated_at = $updated_at;
         $cusurl->save();
+
         return redirect(route('admin.customurl'))->with("success", "Tautan kustom telah disunting!");
     }
 }
