@@ -1,171 +1,67 @@
 <!DOCTYPE html>
-<html lang="{{ app()->getLocale() }}">
+<html>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-
-    <!-- Icons -->
+    <title>S.KLAS Admin Page</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link rel="icon" href="{{ asset('img/logo-32x32.png') }}" sizes="32x32">
-    <title>URL Shortener by KLAS</title>
-
-    <!-- Styles -->
-    <link type="text/css" href="{{ asset('css/normalize.css') }}" rel="stylesheet">
-    <link type="text/css" rel="stylesheet" href="{{ asset('css/materialize.css') }}" media="screen,projection"/>
-    <link type="text/css" href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <style>
-        body {
-            display: flex;
-            min-height: 100vh;
-            flex-direction: column;
-        }
-
-        main {
-            flex: 1 0 auto;
-        }
-
-        .input-field input[type=date]:focus + label,
-        .input-field input[type=text]:focus + label,
-        .input-field input[type=email]:focus + label,
-        .input-field input[type=password]:focus + label {
-            color: #e91e63;
-        }
-
-        .input-field input[type=date]:focus,
-        .input-field input[type=text]:focus,
-        .input-field input[type=email]:focus,
-        .input-field input[type=password]:focus {
-            border-bottom: 2px solid #e91e63;
-            box-shadow: none;
-        }
-    </style>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link href="https://unpkg.com/ionicons@3.0.0/dist/css/ionicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
-<body id="app">
-<header>
-</header>
-<main>
-    <div class="container valign-wrapper hide-on-small-and-down" style="padding: 7%;">
-        <div class="z-depth-5 grey lighten-4 row" id="inibro" style="display: inline-block; padding: 32px 64px 0px 64px; border: 1px solid #EEE;">
-            <div class="center">
-                <div style="font-size: 32px;">{{ __('Login') }}</div>
+<body class="hold-transition login-page">
+<div class="login-box">
+    <div class="login-logo">
+        <a href="https://klas.or.id"><img src="{{ asset('img/logo.png') }}" width="192px" height="auto" alt="KLAS Logo"></a>
+    </div>
+    <!-- /.login-logo -->
+    <div class="login-box-body">
+        <p class="login-box-msg">{{ __('Welcome') }}</p>
+
+        <form action="{{ route('login') }}" method="post" aria-label="{{ __('Login') }}">
+            @csrf
+            <div class="form-group has-feedback">
+                <input type="email" class="form-control" name="email" placeholder="{{ __('E-Mail Address') }}"
+                       value="{{ old('email') }}">
+                <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
             </div>
-
-            <form method="POST" class="col s12" action="{{ route('login') }}" aria-label="{{ __('Login') }}">
-                @csrf
-
-                <div class='row'>
-                    <div class='col s12'>
+            <div class="form-group has-feedback">
+                <input type="password" class="form-control" name="password" placeholder="{{ __('Password') }}">
+                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+            </div>
+            <div class="row">
+                <div class="col-xs-8">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" name="remember"
+                                   value="{{ old('remember') ? 'checked' : '' }}"> {{ __('Remember Me') }}
+                        </label>
                     </div>
                 </div>
-
-                <div class="row input-field">
-                    <input id="email" type="email" class="validate" name="email" value="{{ old('email') }}" required>
-                    <label for="email">{{ __('E-Mail Address') }}</label>
+                <!-- /.col -->
+                <div class="col-xs-4">
+                    <button type="submit" class="btn btn-primary btn-block btn-flat">{{ __('Login') }}</button>
                 </div>
-
-                <div class="row input-field">
-                    <input id="password" type="password" class="validate" name="password" value="{{ old('password') }}" required>
-                    <label for="password">{{ __('Password') }}</label>
-                </div>
-
-                <div class="row input-field">
-                    <p>
-                        <label>
-                            <input type="checkbox" class="filled-in" name="remember" value="{{ old('remember') ? 'checked' : '' }}">
-                            <span>{{ __('Remember Me') }}</span>
-                        </label>
-                    </p>
-                </div>
-
-                <div class="row">
-                    <button class="btn waves-effect waves-light" type="submit" name="action">{{ __('Login') }}</button>
-                </div>
-            </form>
-        </div>
-    </div>
-    <div class="hide-on-med-and-up">
-        <nav class="navbar-fixed-top teal z-depth-0">
-            <div class="nav-wrapper">
-                <div class="nav-title center-align" style="display: block; padding: 0;">Login</div>
+                <!-- /.col -->
             </div>
-        </nav>
-        <div class="section"></div>
-        <div class="container">
-            <form method="POST" class="col s12" action="{{ route('login') }}" aria-label="{{ __('Login') }}">
-                @csrf
-
-                <div class='row'>
-                    <div class='col s12'>
-                    </div>
-                </div>
-
-                <div class="row input-field">
-                    <input id="email" type="email" class="validate" name="email" value="{{ old('email') }}" required>
-                    <label for="email">{{ __('E-Mail Address') }}</label>
-                </div>
-
-                <div class="row input-field">
-                    <input id="password" type="password" class="validate" name="password" value="{{ old('password') }}" required>
-                    <label for="password">{{ __('Password') }}</label>
-                </div>
-
-                <div class="row input-field">
-                    <p>
-                        <label>
-                            <input type="checkbox" class="filled-in" name="remember" value="{{ old('remember') ? 'checked' : '' }}">
-                            <span>{{ __('Remember Me') }}</span>
-                        </label>
-                    </p>
-                </div>
-
-                <div class="row">
-                    <button class="btn waves-effect waves-light" type="submit" name="action">{{ __('Login') }}</button>
-                </div>
-            </form>
-        </div>
+        </form>
     </div>
-</main>
-<!-- Footer -->
-<footer class="footer-copyright">
+    <!-- /.login-box-body -->
+</div>
+<!-- /.login-box -->
 
-</footer>
-<script type="text/javascript" src="{{ asset('js/materialize.min.js') }}"></script>
-<script>
-    M.AutoInit();
-</script>
-<script>
-    // Set the date we're counting down to
-    let countDown = 9;
-    let data = ["z-depth-5", "z-depth-4", "z-depth-3", "z-depth-2", "z-depth-1", "z-depth-0"];
-    let i = 0;
-    // Update the count down every 1 second
-    let x = setInterval(function () {
-        countDown--;
-        // Output the result in an element with id="demo"
-        if (countDown<5) {
-            if ( document.getElementById("inibro").classList.contains(data[i]) ) {
-                document.getElementById("inibro").classList.replace(data[i], data[i-1]);
-            }
-            i--;
-        } else {
-            if ( document.getElementById("inibro").classList.contains(data[i]) ) {
-                document.getElementById("inibro").classList.replace(data[i], data[i+1]);
-            }
-            i++;
-        }
-        // If the count down is over, write some text
-        if (countDown <= 0) {
-            clearInterval(x);
-            if ( document.getElementById("inibro").classList.contains(data[i]) ) {
-                document.getElementById("inibro").classList.replace(data[i], "z-depth-5");
-            }
-        }
-    }, 100);
-</script>
+<!-- jQuery 3 -->
+<script src="https://code.jquery.com/jquery.min.js" crossorigin="anonymous"></script>
+<!-- Bootstrap 3.3.7 -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" crossorigin="anonymous"></script>
+<!-- AdminLTE App -->
+<script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
 </body>
 </html>

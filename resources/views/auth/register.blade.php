@@ -1,56 +1,9 @@
-<!DOCTYPE html>
-<html lang="{{ app()->getLocale() }}">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+@extends('layouts.app')
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-
-    <!-- Icons -->
-    <link rel="icon" href="{{ asset('img/logo-32x32.png') }}" sizes="32x32">
-    <title>URL Shortener by KLAS</title>
-
-    <!-- Styles -->
-    <link type="text/css" href="{{ asset('css/normalize.css') }}" rel="stylesheet">
-    <link type="text/css" rel="stylesheet" href="{{ asset('css/materialize.css') }}" media="screen,projection"/>
-    <link type="text/css" href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <style>
-        body {
-            display: flex;
-            min-height: 100vh;
-            flex-direction: column;
-        }
-
-        main {
-            flex: 1 0 auto;
-        }
-
-        .input-field input[type=date]:focus + label,
-        .input-field input[type=text]:focus + label,
-        .input-field input[type=email]:focus + label,
-        .input-field input[type=password]:focus + label {
-            color: #e91e63;
-        }
-
-        .input-field input[type=date]:focus,
-        .input-field input[type=text]:focus,
-        .input-field input[type=email]:focus,
-        .input-field input[type=password]:focus {
-            border-bottom: 2px solid #e91e63;
-            box-shadow: none;
-        }
-    </style>
-</head>
-<body id="app">
-<header>
-</header>
-<main>
+@section('content')
     <div class="container valign-wrapper hide-on-small-and-down" style="padding: 6%;">
-        <div class="z-depth-5 grey lighten-4 row" id="inibro" style="display: inline-block; padding: 32px 64px 0px 64px; border: 1px solid #EEE;">
+        <div class="z-depth-5 grey lighten-4 row" id="inibro"
+             style="display: inline-block; padding: 32px 64px 0 64px; border: 1px solid #EEE;">
             <div class="center">
                 <div style="font-size: 32px;">{{ __('Register') }}</div>
             </div>
@@ -134,48 +87,42 @@
                 </div>
 
                 <div class="row">
-                    <span>Sudah punya akun ? <a href="{{ route('login') }}">Masuk disini</a></span>
+                    <span>{{ __('Already have an account?') }} <a
+                                href="{{ route('login') }}">{{ __('Sign in here') }}</a></span>
                 </div>
             </form>
         </div>
     </div>
-</main>
-<!-- Footer -->
-<footer class="footer-copyright">
+@endsection
 
-</footer>
-<script type="text/javascript" src="{{ asset('js/materialize.min.js') }}"></script>
-<script>
-    M.AutoInit();
-</script>
-<script>
-    // Set the date we're counting down to
-    let countDown = 9;
-    let data = ["z-depth-5", "z-depth-4", "z-depth-3", "z-depth-2", "z-depth-1", "z-depth-0"];
-    let i = 0;
-    // Update the count down every 1 second
-    let x = setInterval(function () {
-        countDown--;
-        // Output the result in an element with id="demo"
-        if (countDown<5) {
-            if ( document.getElementById("inibro").classList.contains(data[i]) ) {
-                document.getElementById("inibro").classList.replace(data[i], data[i-1]);
+@section('jsscript')
+    <script>
+        // Set the date we're counting down to
+        let countDown = 9;
+        let data = ["z-depth-5", "z-depth-4", "z-depth-3", "z-depth-2", "z-depth-1", "z-depth-0"];
+        let i = 0;
+        // Update the count down every 1 second
+        let x = setInterval(function () {
+            countDown--;
+            // Output the result in an element with id="demo"
+            if (countDown<5) {
+                if ( document.getElementById("inibro").classList.contains(data[i]) ) {
+                    document.getElementById("inibro").classList.replace(data[i], data[i-1]);
+                }
+                i--;
+            } else {
+                if ( document.getElementById("inibro").classList.contains(data[i]) ) {
+                    document.getElementById("inibro").classList.replace(data[i], data[i+1]);
+                }
+                i++;
             }
-            i--;
-        } else {
-            if ( document.getElementById("inibro").classList.contains(data[i]) ) {
-                document.getElementById("inibro").classList.replace(data[i], data[i+1]);
+            // If the count down is over, write some text
+            if (countDown <= 0) {
+                clearInterval(x);
+                if ( document.getElementById("inibro").classList.contains(data[i]) ) {
+                    document.getElementById("inibro").classList.replace(data[i], "z-depth-5");
+                }
             }
-            i++;
-        }
-        // If the count down is over, write some text
-        if (countDown <= 0) {
-            clearInterval(x);
-            if ( document.getElementById("inibro").classList.contains(data[i]) ) {
-                document.getElementById("inibro").classList.replace(data[i], "z-depth-5");
-            }
-        }
-    }, 100);
-</script>
-</body>
-</html>
+        }, 100);
+    </script>
+@endsection
