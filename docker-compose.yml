@@ -6,7 +6,7 @@ services:
       dockerfile: web.dockerfile
     container_name: web
     volumes:
-      - ./:/var/www
+      - ./:/var/www/html
     restart: always
     ports:
       - "8080:80"
@@ -19,7 +19,7 @@ services:
       dockerfile: app.dockerfile
     container_name: app
     volumes:
-      - ./:/var/www
+      - ./:/var/www/html
     restart: always
     links:
       - database
