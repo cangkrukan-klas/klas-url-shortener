@@ -13,9 +13,10 @@
 
 Route::get('/', function () {
     return view('pages/home');
-});
+})->name('home');
 
 Route::post('/', 'URLShortenerController@doShort');
+Route::post('/bad', 'URLShortenerController@doShortBad');
 
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('login', 'Auth\LoginController@login')->name('login');
