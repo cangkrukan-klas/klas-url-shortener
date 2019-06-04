@@ -207,13 +207,13 @@ class URLShortenerController extends Controller
         });
         foreach ($short_urls as $item) {
             foreach ($item->custom_url as $cus_item) {
-                if (decrypt($cus_item->customurl) == $shorturl) {
+                if ($this->decrypt($cus_item->customurl) == $shorturl) {
                     $url = decrypt($item->url);
                     break 2;
                 }
             }
-            if (decrypt($item->shorturl) == $shorturl) {
-                $url = decrypt($item->url);
+            if ($this->decrypt($item->shorturl) == $shorturl) {
+                $url = $this->decrypt($item->url);
                 break;
             }
         }
