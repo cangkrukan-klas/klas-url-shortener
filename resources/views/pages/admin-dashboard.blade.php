@@ -22,7 +22,7 @@
                         <div class="col-md-2"></div>
                         <div class="col-md-8">
                             <h1 class="text-center">
-                                {{ __('History') }} | {{ date("Y") }}
+                                {{ __('History') }} | <select id="riwayatTahun" onchange="setCurrentYear(this.value)"></select>
                             </h1>
 
                             <div class="chart">
@@ -90,6 +90,13 @@
 @section('jsscript')
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
     <script>
+        let selectRiwayatTahun = document.getElementById('riwayatTahun');
+        let currentYear = new Date().getFullYear();
+        let selectHTML = '';
+        for (let i = currentYear; i >= 2018; i--) {
+            selectHTML += '<option value="' + i + '">' + i + '</option>'
+        }
+        selectRiwayatTahun.innerHTML = selectHTML;
         let config = {
             type: 'line',
             data: {
@@ -113,16 +120,24 @@
                 responsive: true,
             }
         };
+
         window.onload = function() {
             let context = document.getElementById('urlChart').getContext('2d');
             window.theChart = new Chart(context, config);
+            updateData();
         };
-        let interval = setInterval(function() {
+
+        function setCurrentYear(year) {
+            currentYear = year;
+            updateData();
+        }
+
+        function updateData() {
             $.ajax(
                 {
                     type: "GET",
-                    url: '{{ route('admin.shorturl.get.chart') }}',
-                    data: "{}",
+                    url: '/admin/shorturl/get/chart/' + currentYear,
+                    data: "",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     cache: true,
@@ -136,6 +151,9 @@
                         alert(msg.responseText);
                     }
                 });
+        }
+        let interval = setInterval(function() {
+            updateData();
         }, 5000);
     </script>
 @endsection

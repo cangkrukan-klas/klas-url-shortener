@@ -78,19 +78,19 @@ class AdminController extends Controller
         return response()->json($data, 200);
     }
 
-    public function shorturl_get_chart() {
+    public function shorturl_get_chart($year) {
         $data_url_short = [0,0,0,0,0,0,0,0,0,0,0,0];
         $data_url_custom = [0,0,0,0,0,0,0,0,0,0,0,0];
         $short_urls = ShortUrl::all();
         $custom_urls = CustomUrl::all();
         foreach ($short_urls as $item) {
-            if (date('Y', strtotime($item->created_at)) == date('Y')) {
+            if (date('Y', strtotime($item->created_at)) == $year) {
                 $idx = date('n', strtotime($item->created_at));
                 $data_url_short[$idx - 1] += 1;
             }
         }
         foreach ($custom_urls as $item) {
-            if (date('Y', strtotime($item->created_at)) == date('Y')) {
+            if (date('Y', strtotime($item->created_at)) == $year) {
                 $idx = date('n', strtotime($item->created_at));
                 $data_url_custom[$idx - 1] += 1;
             }

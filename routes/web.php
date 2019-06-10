@@ -27,7 +27,7 @@ Route::prefix('/admin')->name('admin.')->group(function () {
     Route::get('/shorturl', 'AdminController@shorturl')->name('shorturl');
     Route::get('/shorturl/update', 'AdminController@update_shorturl')->name('shorturl.update');
     Route::get('/shorturl/get', 'AdminController@shorturl_get')->name('shorturl.get');
-    Route::get('/shorturl/get/chart', 'AdminController@shorturl_get_chart')->name('shorturl.get.chart');
+    Route::get('/shorturl/get/chart/{year}', 'AdminController@shorturl_get_chart')->name('shorturl.get.chart');
     Route::get('/customurl', 'AdminController@customurl')->name('customurl');
     Route::get('/customurl/update', 'AdminController@update_customurl')->name('customurl.get');
     Route::get('/customurl/get', 'AdminController@customurl_get')->name('customurl.get');
