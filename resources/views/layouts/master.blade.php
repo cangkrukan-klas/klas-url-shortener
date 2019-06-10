@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="{{ app()->getLocale() }}">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}"/>
+    <meta name="descriptions" content="Alat Pemendek Tautan yang dibuat dan dirawat oleh KLAS (Kelompok Linux Arek Suroboyo)."/>
     <link rel="icon" href="{{ asset('img/logo-32x32.png') }}" sizes="32x32">
-    <title>URL Shortener by KLAS</title>
+    <title>{{ __('URL Shortener by Kelompok Linux Arek Suroboyo') }}</title>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <style rel="stylesheet">.dropdown-custom{top:56px!important;width:100%!important;height:auto!important}.card-footer{padding:1%}main{margin-top:4%}.text-description{margin-bottom:0}@media (max-width:575.98px){.hide-on-lg-down,.hide-on-med-down,.hide-on-sm-down,.hide-on-xs{display:none!important}.card-no-small{box-shadow:0 0!important;border:0!important;border-radius:0!important}main{margin-top:90px}}@media (min-width:576px) and (max-width:767.98px){.hide-on-lg-down,.hide-on-med-down,.hide-on-sm,.hide-on-sm-down,.hide-on-sm-up{display:none!important}.card-no-small{box-shadow:0 0!important;border:0!important;border-radius:0!important}main{margin-top:90px}}@media (min-width:768px) and (max-width:991.98px){.hide-on-lg-down,.hide-on-med,.hide-on-med-down,.hide-on-med-up,.hide-on-sm-up{display:none!important}main{margin-top:90px}}@media (min-width:992px) and (max-width:1199.98px){.hide-on-lg,.hide-on-lg-down,.hide-on-lg-up,.hide-on-med-up,.hide-on-sm-up{display:none!important}}@media (min-width:1200px){.hide-on-lg-up,.hide-on-med-up,.hide-on-sm-up,.hide-on-xl{display:none!important}}</style>
+    <style rel="stylesheet">.card-footer{padding:1%}main{margin-top:4%}.text-description{margin-bottom:0}@media (max-width:575.98px){.hide-on-med-down{display:none!important}main{margin-top:90px}}@media (min-width:576px) and (max-width:767.98px){.hide-on-med-down{display:none!important}main{margin-top:90px}}@media (min-width:768px) and (max-width:991.98px){.hide-on-med-down{display:none!important}main{margin-top:90px}}@media (min-width:992px) and (max-width:1199.98px){.hide-on-lg-up{display:none!important}}@media (min-width:1200px){.hide-on-lg-up{display:none!important}}</style>
 </head>
 <body id="app">
 <header class="fixed-top">

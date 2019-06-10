@@ -21,6 +21,26 @@ class AdminController extends Controller
     }
 
     /**
+     * Decrypt the string
+     *
+     * @param $string
+     * @return mixed
+     */
+    private function decrypt($string) {
+        return Crypt::decryptString($string);
+    }
+
+    /**
+     * Encrypt the string
+     *
+     * @param $string
+     * @return mixed
+     */
+    private function encrypt($string) {
+        return Crypt::encryptString($string);
+    }
+
+    /**
      * Show the application dashboard.
      *
      * @return \Illuminate\Http\Response
@@ -32,48 +52,73 @@ class AdminController extends Controller
 
     public function shorturl()
     {
+        return view('pages/admin-shorturl');
+    }
+
+    public function shorturl_get() {
         $data = [];
-        $i = 1;
         $short_urls = ShortUrl::with('custom_url')->get();
         $short_urls->map(function ($short_url) {
             return $short_url->custom_url;
         });
         foreach ($short_urls as $item) {
             $obj = new \stdClass();
-            $obj->no = $i++;
             $obj->id = $item->id;
-            $obj->url = Crypt::decryptString($item->url);
-            $obj->shorturl = Crypt::decryptString($item->shorturl);
+            $obj->url = $this->decrypt($item->url);
+            $obj->shorturl = $this->decrypt($item->shorturl);
+            $customurl = "";
+            foreach ($item->custom_url as $subitem) {
+                $customurl .= $this->decrypt($subitem->customurl) . ',';
+            }
+            $obj->customurl = $customurl;
             $obj->created_at = date("j F Y", strtotime($item->created_at));
+            $obj->updated_at = date("j F Y", strtotime($item->updated_at));
             array_push($data, $obj);
         }
+        return response()->json($data, 200);
+    }
 
-        return view('pages/admin-shorturl', ['data' => $data]);
+    public function shorturl_get_chart() {
+        $data_url_short = [0,0,0,0,0,0,0,0,0,0,0,0];
+        $data_url_custom = [0,0,0,0,0,0,0,0,0,0,0,0];
+        $short_urls = ShortUrl::all();
+        $custom_urls = CustomUrl::all();
+        foreach ($short_urls as $item) {
+            if (date('Y', strtotime($item->created_at)) == date('Y')) {
+                $idx = date('n', strtotime($item->created_at));
+                $data_url_short[$idx - 1] += 1;
+            }
+        }
+        foreach ($custom_urls as $item) {
+            if (date('Y', strtotime($item->created_at)) == date('Y')) {
+                $idx = date('n', strtotime($item->created_at));
+                $data_url_custom[$idx - 1] += 1;
+            }
+        }
+        return response()->json(['shorturl' => $data_url_short, 'customurl' => $data_url_custom], 200);
     }
 
     public function customurl()
     {
+        return view('pages/admin-customurl');
+    }
+
+    public function customurl_get() {
         $data = array();
-        $i = 1;
-        $short_urls = ShortUrl::with('custom_url')->get();
-        $short_urls->map(function ($short_url) {
-            return $short_url->custom_url;
-        });
-        foreach ($short_urls as $item) {
-            foreach ($item->custom_url as $cus_item) {
+        $custom_urls = CustomUrl::all();
+        foreach ($custom_urls as $item) {
                 $obj = new \stdClass();
-                $obj->no = $i++;
-                $obj->id = $cus_item->id;
-                $obj->url = Crypt::decryptString($item->url);
-                $obj->url_id = $cus_item->url_id;
-                $obj->customurl = Crypt::decryptString($cus_item->customurl);
-                $obj->created_at = date("j F Y", strtotime($cus_item->created_at));
-                $obj->created_at_full = $cus_item->created_at;
+                $obj->id = $item->id;
+                $obj->url_id = $item->url_id;
+                $obj->url = $this->decrypt(ShortUrl::query()->find($item->url_id)->url);
+                $obj->shorturl = $this->decrypt(ShortUrl::query()->find($item->url_id)->shorturl);
+                $obj->customurl = $this->decrypt($item->customurl);
+                $obj->created_at = date("j F Y", strtotime($item->created_at));
+                $obj->updated_at = date("j F Y", strtotime($item->updated_at));
                 array_push($data, $obj);
-            }
         }
-        $urls = ShortUrl::all();
-        return view('pages/admin-customurl', ['data' => $data, 'shorturls' => $urls]);
+
+        return response()->json($data, 200);
     }
 
     public function insert_shorturl_page() {

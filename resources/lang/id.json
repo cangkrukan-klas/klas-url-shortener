@@ -1,6 +1,7 @@
 {
   "SIMPLE AND FAST URL SHORTENER": "PEMENDEK TAUTAN SEDERHANA DAN CEPAT",
   "by Kelompok Linux Arek Suroboyo": "oleh Kelompok Linux Arek Suroboyo",
+  "URL Shortener by Kelompok Linux Arek Suroboyo": "Pemendek Tautan oleh Kelompok Linux Arek Suroboyo",
   "Login": "Masuk",
   "Register": "Daftar",
   "Logout": "Keluar",
@@ -53,5 +54,17 @@
   "Date": "Tanggal",
   "Option": "Opsi",
   "Some info": "Beberapa informasi",
-  "Welcome": "Selamat Datang"
+  "Welcome": "Selamat Datang",
+  "History": "Riwayat",
+  "January": "Januari",
+  "February": "Februari",
+  "March": "Maret",
+  "May": "Mei",
+  "June": "Juni",
+  "July": "Juli",
+  "August": "Agustus",
+  "September": "September",
+  "October": "Oktober",
+  "November": "Nopember",
+  "December": "Desember"
 }

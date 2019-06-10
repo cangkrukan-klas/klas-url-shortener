@@ -19,6 +19,22 @@
             <div class="box">
                 <div class="box-body">
                     <div class="row">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-8">
+                            <h1 class="text-center">
+                                {{ __('History') }} | {{ date("Y") }}
+                            </h1>
+
+                            <div class="chart">
+                                <!-- Sales Chart Canvas -->
+                                <canvas id="urlChart" style="height: 400px;"></canvas>
+                            </div>
+                            <!-- /.chart-responsive -->
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-1"></div>
                         <div class="col-lg-3 col-xs-6">
                             <!-- small box -->
                             <div class="small-box bg-aqua">
@@ -69,4 +85,57 @@
         <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
+@endsection
+
+@section('jsscript')
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
+    <script>
+        let config = {
+            type: 'line',
+            data: {
+                labels: ['{{ __('January') }}', '{{ __('February') }}', '{{ __('March') }}', '{{ __('April') }}', '{{ __('May') }}', '{{ __('June') }}', '{{ __('July') }}', '{{ __('August') }}', '{{ __('September') }}', '{{ __('October') }}', '{{ __('November') }}', '{{ __('December') }}'],
+                datasets: [{
+                    label: '{{ __('Short URL') }}',
+                    data: [0,0,0,0,0,0,0,0,0,0,0,0],
+                    backgroundColor: 'rgba(60,141,188,0.2)',
+                    borderColor: 'rgba(60,141,188,0.8)',
+                }, {
+                    label: '{{ __('Custom URL') }}',
+                    data: [0,0,0,0,0,0,0,0,0,0,0,0],
+                    backgroundColor: 'rgba(1,222,0,0.2)',
+                    borderColor: 'rgba(1,222,0,0.8)',
+                }]
+            },
+            options: {
+                animation: {
+                    duration: 2000,
+                },
+                responsive: true,
+            }
+        };
+        window.onload = function() {
+            let context = document.getElementById('urlChart').getContext('2d');
+            window.theChart = new Chart(context, config);
+        };
+        let interval = setInterval(function() {
+            $.ajax(
+                {
+                    type: "GET",
+                    url: '{{ route('admin.shorturl.get.chart') }}',
+                    data: "{}",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    cache: true,
+                    success: function (data) {
+                        config.data.datasets[0].data = data.shorturl;
+                        config.data.datasets[1].data = data.customurl;
+                        window.theChart.update();
+                    },
+
+                    error: function (msg) {
+                        alert(msg.responseText);
+                    }
+                });
+        }, 5000);
+    </script>
 @endsection
