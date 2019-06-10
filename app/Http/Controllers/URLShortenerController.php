@@ -3,90 +3,93 @@ namespace App\Http\Controllers;
 use App\CustomUrl;
 use App\DataStatistik;
 use App\ShortUrl;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 class URLShortenerController extends Controller
 {
-    public function doShort(Request $request)
-    {
-        // Melakukan pemendekan link
-        $is_new_short_url = 1;
-        $result_custom_url = "";
-        $is_new_custom_url = 1;
-        $url = $request->get('url');
-        $customurl = $request->get('customurl');
-        $parse = parse_url($customurl);
-        if (isset($parse['scheme'])) {
-            $customurl = str_replace(array($parse['scheme'], "://", $parse['host']), "", $customurl);
-        }
-        $customurl = preg_replace("/[^a-zA-Z0-9 \. \-]/", "", $customurl);
-        if ($customurl == "home" || $customurl == "login" || $customurl == "register") {
-            return view('pages/home')->with("error", "Tautan kustom tidak dapat digunakan!");
-        }
-        # Check the URL
-        $url_id = 0;
-        $short_url_query_all = ShortUrl::all();
-        foreach ($short_url_query_all as $item) {
-            if (Crypt::decryptString($item->url) == $url) {
-//                dd(Crypt::decryptString($item->url), $url);
-                $url_id = $item->id;
-                $is_new_short_url = 0;
-                if ($customurl != "" || $customurl != null) {
-                    foreach ($item->custom_url as $cus_item) {
-                        if (Crypt::decryptString($cus_item->customurl) == $customurl) {
-                            return view('pages/home', ['url' => $url])->with("error", "Tautan kustom telah digunakan!");
-                        }
-                    }
-                }
-                $result_short_url = Crypt::decryptString($item->shorturl);
-                break;
-            }
-        }
-        // Generate
-        if ($is_new_short_url == 1) {
-            $regenerate_shorturl = 1;
-            $random_string_shorturl = "";
-            while ($regenerate_shorturl == 1) {
-                $regenerate_shorturl = 0;
-                $random_string_shorturl = $this->randomString();
-                foreach ($short_url_query_all as $item) {
-                    if (Crypt::decryptString($item->shorturl) == $random_string_shorturl) {
-                        $regenerate_shorturl = 1;
-                        break;
-                    }
-                }
-            }
-            $new_short_url = new ShortUrl;
-            $new_short_url->url = Crypt::encryptString($url);
-            $new_short_url->shorturl = Crypt::encryptString($random_string_shorturl);
-            $new_short_url->save();
-            $result_short_url = Crypt::decryptString($new_short_url->shorturl);
-            $stat = DataStatistik::query()->where('nama', 'shortlinkgenerate')->firstOrFail();
-            $stat->update([
-                'nama' => $stat->nama,
-                'nilai' => $stat->nilai + 1
-            ]);
-            $url_id = $new_short_url->id;
-        }
-        if ($is_new_custom_url == 1) {
-            $new_custom_url = new CustomUrl;
-            $new_custom_url->url_id = $url_id;
-            $new_custom_url->customurl = Crypt::encryptString($customurl);
-            $new_custom_url->save();
-            $result_custom_url = $customurl;
-            $stat = DataStatistik::query()->where('nama', 'shortlinkcustom')->firstOrFail();
-            $stat->update([
-                'nama' => $stat->nama,
-                'nilai' => $stat->nilai + 1
-            ]);
-        }
-        $resp = [
-            'url' => $url,
-            'shorturl' => $result_short_url,
-            'customurl' => $result_custom_url
-        ];
-        return view('pages/result', ['result' => $resp]);
+    /**
+     * Decrypt the string
+     *
+     * @param $string
+     * @return mixed
+     */
+    private function decrypt($string) {
+        return Crypt::decryptString($string);
     }
+
+    /**
+     * Encrypt the string
+     *
+     * @param $string
+     * @return mixed
+     */
+    private function encrypt($string) {
+        return Crypt::encryptString($string);
+    }
+
+    /**
+     * Remove URL Pattern like http://domain.com
+     * Also remove unwanted char like '.' and '-'
+     *
+     * @param $string
+     * @return string|string[]|null
+     */
+    private function removeUnwantedString($string) {
+        $parse = parse_url($string);
+        if (isset($parse['scheme'])) {
+            $string = str_replace(array($parse['scheme'], "://", $parse['host']), "", $string);
+        }
+        $cleanString = preg_replace("/[^a-zA-Z0-9 \. \-]/", "", $string);
+        return $cleanString;
+    }
+
+    /**
+     * Check if the URL exist
+     *
+     * @param $url
+     * @return array
+     */
+    private function isNewUrl($url) {
+        if ($url != null || $url != "") {
+            $shorturl_q = ShortUrl::all();
+            if (count($shorturl_q) != 0) {
+                foreach ($shorturl_q as $item) {
+                    if ($this->decrypt($item->url) == $url) {
+                        return ["found" => true, "id" => $item->id, "shorturl" => $item->shorturl];
+                    }
+                }
+            }
+        }
+        return ["found" => false, "id" => 0, "shorturl" => ""];
+    }
+
+    /**
+     * Check if the custom string that is use in custom URL already exist or not
+     *
+     * @param $string
+     * @return array
+     */
+    private function isNewCustomUrl($string) {
+        if ($string != null || $string != "") {
+            $customurl_q = CustomUrl::all();
+            if (count($customurl_q) != 0) {
+                foreach ($customurl_q as $item) {
+                    if ($this->decrypt($item->customurl) == $string) {
+                        return ["found" => true, "id" => $item->id, "url_id" => $item->url_id, "customurl" => $item->customurl];
+                    }
+                }
+            }
+        }
+        return ["found" => false, "id" => 0, "url_id" => 0, "customurl" => ""];
+    }
+
+    /**
+     * Generate Random String with default length = 3
+     *
+     * @param int $length
+     * @return string
+     */
     protected function randomString($length = 3)
     {
         $str = "";
@@ -98,6 +101,103 @@ class URLShortenerController extends Controller
         }
         return $str;
     }
+
+    /**
+     * Generate Random String that not used yet
+     *
+     * @return string
+     */
+    private function generateUnexistRandomString() {
+        $data = ShortUrl::all();
+        $rand_string = $this->randomString();
+        foreach ($data as $item) {
+            if ($this->decrypt($item->shorturl) == $rand_string) {
+                $this->generateUnexistRandomString();
+                break;
+            }
+        }
+        return $rand_string;
+    }
+
+    private function incrementStatistic($column) {
+        try {
+            $stat = DataStatistik::query()->where('nama', '=', $column)->firstOrFail();
+            $stat->update([
+                'nama' => $stat->nama,
+                'nilai' => $stat->nilai + 1
+            ]);
+        } catch (QueryException $queryException) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Build short url
+     *
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function doShort(Request $request)
+    {
+        $url = $request->get('url');
+        $customurl = $request->get('customurl');
+
+        if ($url != "" && $url != null) {
+            $url_check = $this->isNewUrl($url);
+            if (!$url_check['found']) {
+                $newShortUrl = new ShortUrl;
+                $newShortUrl->url = $this->encrypt($url);
+                $newShortUrl->shorturl = $this->encrypt($this->generateUnexistRandomString());
+                $newShortUrl->save();
+                $url_check['found'] = true;
+                $url_check['id'] = $newShortUrl->id;
+                $url_check['shorturl'] = $newShortUrl->shorturl;
+                $this->incrementStatistic('shortlinkgenerate');
+            }
+        } else {
+            return redirect(route('home'));
+        }
+
+        if ($customurl != "" && $customurl != null) {
+            $customurl = $this->removeUnwantedString($customurl);
+
+            if ($customurl == "home" || $customurl == "login" || $customurl == "register") {
+                return view('pages/home')->with("error", "Tautan kustom tidak dapat digunakan!");
+            }
+
+            $customurl_check = $this->isNewCustomUrl($customurl);
+
+            if (!$customurl_check['found']) {
+                $newCustomUrl = new CustomUrl;
+                $newCustomUrl->url_id = $url_check['id'];
+                $newCustomUrl->customurl = $this->encrypt($customurl);
+                $newCustomUrl->save();
+                $customurl_check['found'] = true;
+                $customurl_check['url_id'] = $newCustomUrl->url_id;
+                $customurl_check['id'] = $newCustomUrl->id;
+                $customurl_check['customurl'] = $newCustomUrl->customurl;
+                $this->incrementStatistic('shortlinkcustom');
+            } else {
+                if ($customurl_check['url_id'] != $url_check['id']) {
+                    return view('pages/home', ['url' => $url])->with("error", "Tautan kustom telah digunakan!");
+                }
+            }
+        }
+
+        return view('pages/result', ['result' => [
+            'url' => $url,
+            'shorturl' => $this->decrypt($url_check['shorturl']),
+            'customurl' => isset($customurl_check) ? $this->decrypt($customurl_check['customurl']) : ""
+        ]]);
+    }
+
+    /**
+     * Redirect to the URL
+     *
+     * @param $shorturl
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function go($shorturl)
     {
         $url = "";
@@ -107,13 +207,13 @@ class URLShortenerController extends Controller
         });
         foreach ($short_urls as $item) {
             foreach ($item->custom_url as $cus_item) {
-                if (Crypt::decryptString($cus_item->customurl) == $shorturl) {
-                    $url = Crypt::decryptString($item->url);
+                if ($this->decrypt($cus_item->customurl) == $shorturl) {
+                    $url = decrypt($item->url);
                     break 2;
                 }
             }
-            if (Crypt::decryptString($item->shorturl) == $shorturl) {
-                $url = Crypt::decryptString($item->url);
+            if ($this->decrypt($item->shorturl) == $shorturl) {
+                $url = $this->decrypt($item->url);
                 break;
             }
         }

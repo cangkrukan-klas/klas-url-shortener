@@ -13,7 +13,7 @@
 
 Route::get('/', function () {
     return view('pages/home');
-});
+})->name('home');
 
 Route::post('/', 'URLShortenerController@doShort');
 
