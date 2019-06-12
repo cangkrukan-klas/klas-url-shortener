@@ -8,5 +8,5 @@
     </div>
 @endsection
 @section('jsscript')
-    <script>let countDown = 5;let x = setInterval(function () {countDown--;if (countDown <= 1) {document.getElementById("timer").innerHTML = "" + "<div class=\"d-flex align-items-center\">\n" + "<strong>{{ __('Opening page...') }}</strong>\n" + "<div class=\"spinner-border text-success ml-auto\" role=\"status\" aria-hidden=\"true\"></div></div>" + "<div class=\"collapse\" id=\"collapseExample\">\n" + "<div class=\"card card-body\" style=\"margin-top: 2%;\">{{ $url }}</div></div>";}if (countDown <= 0) {clearInterval(x);window.location = "{{ $url }}";}}, 1000);</script>
+    <script>let countDown = 5;let x = setInterval(function () {countDown--;if (countDown >= 0 && countDown <= 1) {document.getElementById("timer").innerHTML = '<div class="d-flex align-items-center">' + '<strong>{{ __('Opening page...') }}</strong>' + '<div class="spinner-border text-success ml-auto" role="status" aria-hidden="true"></div></div>' + '<div class="collapse" id="collapseExample">' + '<div class="card card-body" style="margin-top: 2%;">{{ $url }}</div></div>';}if (countDown <= 0) {clearInterval(x);window.location = "{{ $url }}";}}, 1000);</script>
 @endsection
