@@ -1,11 +1,13 @@
 <?php
 namespace App\Http\Controllers;
+
 use App\CustomUrl;
 use App\DataStatistik;
 use App\ShortUrl;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
+
 class URLShortenerController extends Controller
 {
     /**
@@ -50,7 +52,7 @@ class URLShortenerController extends Controller
      * @param $url
      * @return array
      */
-    private function isNewUrl($url) {
+    private function findUrl($url) {
         if ($url != null || $url != "") {
             $shorturl_q = ShortUrl::all();
             if (count($shorturl_q) != 0) {
@@ -70,12 +72,12 @@ class URLShortenerController extends Controller
      * @param $string
      * @return array
      */
-    private function isNewCustomUrl($string) {
-        if ($string != null || $string != "") {
+    private function findCustomUrl($customurl) {
+        if ($customurl != null || $customurl != "") {
             $customurl_q = CustomUrl::all();
             if (count($customurl_q) != 0) {
                 foreach ($customurl_q as $item) {
-                    if ($this->decrypt($item->customurl) == $string) {
+                    if ($this->decrypt($item->customurl) == $customurl) {
                         return ["found" => true, "id" => $item->id, "url_id" => $item->url_id, "customurl" => $item->customurl];
                     }
                 }
@@ -140,11 +142,12 @@ class URLShortenerController extends Controller
      */
     public function doShort(Request $request)
     {
+        $token = $request->get('_token');
         $url = $request->get('url');
         $customurl = $request->get('customurl');
 
         if ($url != "" && $url != null) {
-            $url_check = $this->isNewUrl($url);
+            $url_check = $this->findUrl($url);
             if (!$url_check['found']) {
                 $newShortUrl = new ShortUrl;
                 $newShortUrl->url = $this->encrypt($url);
@@ -156,17 +159,40 @@ class URLShortenerController extends Controller
                 $this->incrementStatistic('shortlinkgenerate');
             }
         } else {
-            return redirect(route('home'));
+            if ($token != "") {
+                return redirect(route('home'));
+            } else {
+                return response()->json([
+                    "error" => true,
+                    "message" => "Need url, shorturl, and customurl parameter!",
+                    "data" => [
+                        "url" => "",
+                        "shorturl" => "",
+                        "customurl" => ""
+                    ]
+                ]);
+            }
         }
 
         if ($customurl != "" && $customurl != null) {
             $customurl = $this->removeUnwantedString($customurl);
 
             if ($customurl == "home" || $customurl == "login" || $customurl == "register") {
-                return view('pages/home')->with("error", "Tautan kustom tidak dapat digunakan!");
+                if ($token != "") {
+                    return view('pages/home')->with("error", "Tautan kustom tidak dapat digunakan!");
+                } else {
+                    return response()->json([
+                        "error" => true,
+                        "message" => "Tautan kustom tidak dapat digunakan!",
+                        "data" => [
+                            "url" => $url,
+                            "customurl" => $customurl
+                        ]
+                    ]);
+                }
             }
 
-            $customurl_check = $this->isNewCustomUrl($customurl);
+            $customurl_check = $this->findCustomUrl($customurl);
 
             if (!$customurl_check['found']) {
                 $newCustomUrl = new CustomUrl;
@@ -180,16 +206,39 @@ class URLShortenerController extends Controller
                 $this->incrementStatistic('shortlinkcustom');
             } else {
                 if ($customurl_check['url_id'] != $url_check['id']) {
-                    return view('pages/home', ['url' => $url])->with("error", "Tautan kustom telah digunakan!");
+                    if ($token != "") {
+                        return view('pages/home', ['url' => $url])->with("error", "Tautan kustom telah digunakan!");
+                    } else {
+                        return response()->json([
+                            "error" => true,
+                            "message" => "Tautan kustom telah digunakan!",
+                            "data" => [
+                                "url" => $url,
+                                "customurl" => $customurl
+                            ]
+                        ]);
+                    }
                 }
             }
         }
 
-        return view('pages/result', ['result' => [
-            'url' => $url,
-            'shorturl' => $this->decrypt($url_check['shorturl']),
-            'customurl' => isset($customurl_check) ? $this->decrypt($customurl_check['customurl']) : ""
-        ]]);
+        if ($token != "") {
+            return view('pages/result', ['result' => [
+                'url' => $url,
+                'shorturl' => $this->decrypt($url_check['shorturl']),
+                'customurl' => isset($customurl_check) ? $this->decrypt($customurl_check['customurl']) : ""
+            ]]);
+        } else {
+            return response()->json([
+                "error" => false,
+                "message" => "success",
+                "data" => [
+                    "url" => $url,
+                    "shorturl" => $this->decrypt($url_check['shorturl']),
+                    "customurl" => isset($customurl_check) ? $this->decrypt($customurl_check['customurl']) : ""
+                ]
+            ]);
+        }
     }
 
     /**
@@ -202,9 +251,6 @@ class URLShortenerController extends Controller
     {
         $url = "";
         $short_urls = ShortUrl::with('custom_url')->get();
-        $short_urls->map(function ($short_url) {
-            return $short_url->custom_url;
-        });
         foreach ($short_urls as $item) {
             foreach ($item->custom_url as $cus_item) {
                 if ($this->decrypt($cus_item->customurl) == $shorturl) {
@@ -219,12 +265,9 @@ class URLShortenerController extends Controller
         }
         if ($url == "") {
             return view('pages/home')->with("error", "Tautan pendek yang anda masukkan tidak ditemukan");
-        } else {
-            $stat = DataStatistik::query()->where('nama', 'shortlinkakses')->first();
-            $stat->update([
-                'nama' => $stat->nama,
-                'nilai' => $stat->nilai + 1
-            ]);
+        }
+        if ($url != "") {
+            $this->incrementStatistic('shortlinkakses');
         }
         return view('pages/redirect', ['url' => $url]);
     }

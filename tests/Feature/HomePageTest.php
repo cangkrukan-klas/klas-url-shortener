@@ -11,8 +11,8 @@ class HomePageTest extends TestCase
     public function access_home_page()
     {
         $this->get('/')
-            ->assertSee('PEMENDEK TAUTAN SEDERHANA DAN CEPAT')
-            ->assertSee('oleh Kelompok Linux Arek Suroboyo')
+            ->assertSee(__('SIMPLE AND FAST URL SHORTENER'))
+            ->assertSee(__('by Kelompok Linux Arek Suroboyo'))
             ->assertStatus(200);
     }
 
