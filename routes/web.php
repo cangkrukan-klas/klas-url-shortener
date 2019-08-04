@@ -11,6 +11,8 @@
 |
 */
 
+use Illuminate\Support\Facades\Route;
+
 Route::get('/', function () {
     return view('pages/home');
 })->name('home');
@@ -43,4 +45,4 @@ Route::get('/en', 'LocalizationController@set_en');
 //Route::get('/id/{next}', 'LocalizationController@set_id');
 Route::get('/id', 'LocalizationController@set_id');
 
-Route::get('/{shorturl}', 'URLShortenerController@go');
+Route::get('/{shorturl}', 'URLShortenerController@go_web');

@@ -247,7 +247,7 @@ class URLShortenerController extends Controller
      * @param $shorturl
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function go($shorturl)
+    private function go($shorturl)
     {
         $url = "";
         $short_urls = ShortUrl::with('custom_url')->get();
@@ -269,6 +269,22 @@ class URLShortenerController extends Controller
         if ($url != "") {
             $this->incrementStatistic('shortlinkakses');
         }
+        return $url;
+    }
+
+    public function go_web($shorturl) {
+        $url = $this->go($shorturl);
         return view('pages/redirect', ['url' => $url]);
+    }
+
+    public function go_api($shorturl) {
+        $url = $this->go($shorturl);
+        return response()->json([
+            "error" => false,
+            "message" => "success",
+            "data" => [
+                "url" => $url,
+            ]
+        ]);
     }
 }

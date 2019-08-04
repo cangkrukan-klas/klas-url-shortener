@@ -19,3 +19,4 @@ use Illuminate\Support\Facades\Route;
 //});
 
 Route::post('/create', 'URLShortenerController@doShort');
+Route::get('/go/{shorturl}', 'URLShortenerController@go_api');
