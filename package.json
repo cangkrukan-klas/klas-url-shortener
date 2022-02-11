@@ -20,7 +20,7 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
-        "ajv": "^6.10.0",
+        "ajv": "^6.12.3",
         "bootstrap-sass": "^3.4.1",
         "imagemin": "^5.3.1",
         "jquery": "^3.4.1",
